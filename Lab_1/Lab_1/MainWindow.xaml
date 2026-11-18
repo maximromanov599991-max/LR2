@@ -1,0 +1,527 @@
+﻿<Window x:Class="Lab_1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Лабораторная работа 1 - WPF Интерфейс" Height="615" Width="900"
+        WindowStartupLocation="CenterScreen">
+
+    <!-- Ресурсы окна для демонстрации контекстного меню -->
+    <Window.Resources>
+        <!-- Данные для DataGrid -->
+        <XmlDataProvider x:Key="GridData">
+            <x:XData>
+                <Items xmlns="">
+                    <Item Name="Button" Description="Обычная кнопка" State="Активна"/>
+                    <Item Name="ToggleButton" Description="Кнопка-переключатель" State="Включена"/>
+                    <Item Name="TextBox" Description="Поле ввода текста" State="Пустое"/>
+                    <Item Name="PasswordBox" Description="Поле ввода пароля" State="Заполнено"/>
+                    <Item Name="ComboBox" Description="Раскрывающийся список" State="Выбрано: Русский"/>
+                    <Item Name="ListBox" Description="Список элементов" State="3 элемента"/>
+                    <Item Name="CheckBox" Description="Флажок" State="Отмечен"/>
+                    <Item Name="RadioButton" Description="Переключатель" State="Выбран"/>
+                    <Item Name="Slider" Description="Ползунок" State="Значение: 12"/>
+                    <Item Name="ProgressBar" Description="Индикатор прогресса" State="65%"/>
+                </Items>
+            </x:XData>
+        </XmlDataProvider>
+
+        <!-- Данные для TreeView -->
+        <XmlDataProvider x:Key="TreeData">
+            <x:XData>
+                <Tree xmlns="">
+                    <Node Name="Элементы управления">
+                        <Node Name="Кнопки">
+                            <Node Name="Button"/>
+                            <Node Name="ToggleButton"/>
+                            <Node Name="RepeatButton"/>
+                        </Node>
+                        <Node Name="Поля ввода">
+                            <Node Name="TextBox"/>
+                            <Node Name="PasswordBox"/>
+                            <Node Name="RichTextBox"/>
+                        </Node>
+                        <Node Name="Списки">
+                            <Node Name="ComboBox"/>
+                            <Node Name="ListBox"/>
+                            <Node Name="ListView"/>
+                        </Node>
+                        <Node Name="Текстовые">
+                            <Node Name="TextBlock"/>
+                            <Node Name="Label"/>
+                        </Node>
+                    </Node>
+                    <Node Name="Контейнеры">
+                        <Node Name="StackPanel"/>
+                        <Node Name="Grid"/>
+                        <Node Name="Canvas"/>
+                        <Node Name="DockPanel"/>
+                        <Node Name="WrapPanel"/>
+                    </Node>
+                </Tree>
+            </x:XData>
+        </XmlDataProvider>
+        <!-- Основной цвет (синий) - 10 оттенков -->
+        <XmlDataProvider x:Key="PrimaryColors">
+            <x:XData>
+                <Colors xmlns="">
+                    <Color Hex="#E3F2FD" RGB="227, 242, 253" Name="Основной 50 (очень светлый)"/>
+                    <Color Hex="#BBDEFB" RGB="187, 222, 251" Name="Основной 100 (светлый)"/>
+                    <Color Hex="#90CAF9" RGB="144, 202, 249" Name="Основной 200"/>
+                    <Color Hex="#64B5F6" RGB="100, 181, 246" Name="Основной 300"/>
+                    <Color Hex="#42A5F5" RGB="66, 165, 245" Name="Основной 400"/>
+                    <Color Hex="#2196F3" RGB="33, 150, 243" Name="Основной 500 (базовый)"/>
+                    <Color Hex="#1E88E5" RGB="30, 136, 229" Name="Основной 600"/>
+                    <Color Hex="#1976D2" RGB="25, 118, 210" Name="Основной 700"/>
+                    <Color Hex="#1565C0" RGB="21, 101, 192" Name="Основной 800"/>
+                    <Color Hex="#0D47A1" RGB="13, 71, 161" Name="Основной 900 (тёмный)"/>
+                </Colors>
+            </x:XData>
+        </XmlDataProvider>
+
+        <!-- Акцентный цвет (оранжевый) - 10 оттенков -->
+        <XmlDataProvider x:Key="AccentColors">
+            <x:XData>
+                <Colors xmlns="">
+                    <Color Hex="#FFF3E0" RGB="255, 243, 224" Name="Акцентный 50 (очень светлый)"/>
+                    <Color Hex="#FFE0B2" RGB="255, 224, 178" Name="Акцентный 100 (светлый)"/>
+                    <Color Hex="#FFCC80" RGB="255, 204, 128" Name="Акцентный 200"/>
+                    <Color Hex="#FFB74D" RGB="255, 183, 77" Name="Акцентный 300"/>
+                    <Color Hex="#FFA726" RGB="255, 167, 38" Name="Акцентный 400"/>
+                    <Color Hex="#FF9800" RGB="255, 152, 0" Name="Акцентный 500 (базовый)"/>
+                    <Color Hex="#FB8C00" RGB="251, 140, 0" Name="Акцентный 600"/>
+                    <Color Hex="#F57C00" RGB="245, 124, 0" Name="Акцентный 700"/>
+                    <Color Hex="#EF6C00" RGB="239, 108, 0" Name="Акцентный 800"/>
+                    <Color Hex="#E65100" RGB="230, 81, 0" Name="Акцентный 900 (тёмный)"/>
+                </Colors>
+            </x:XData>
+        </XmlDataProvider>
+
+        <!-- Цвет Успех (зелёный) - 10 оттенков -->
+        <XmlDataProvider x:Key="SuccessColors">
+            <x:XData>
+                <Colors xmlns="">
+                    <Color Hex="#E8F5E9" RGB="232, 245, 233" Name="Успех 50 (очень светлый)"/>
+                    <Color Hex="#C8E6C9" RGB="200, 230, 201" Name="Успех 100 (светлый)"/>
+                    <Color Hex="#A5D6A7" RGB="165, 214, 167" Name="Успех 200"/>
+                    <Color Hex="#81C784" RGB="129, 199, 132" Name="Успех 300"/>
+                    <Color Hex="#66BB6A" RGB="102, 187, 106" Name="Успех 400"/>
+                    <Color Hex="#4CAF50" RGB="76, 175, 80" Name="Успех 500 (базовый)"/>
+                    <Color Hex="#43A047" RGB="67, 160, 71" Name="Успех 600"/>
+                    <Color Hex="#388E3C" RGB="56, 142, 60" Name="Успех 700"/>
+                    <Color Hex="#2E7D32" RGB="46, 125, 50" Name="Успех 800"/>
+                    <Color Hex="#1B5E20" RGB="27, 94, 32" Name="Успех 900 (тёмный)"/>
+                </Colors>
+            </x:XData>
+        </XmlDataProvider>
+
+        <!-- Цвет Ошибка (красный) - 10 оттенков -->
+        <XmlDataProvider x:Key="ErrorColors">
+            <x:XData>
+                <Colors xmlns="">
+                    <Color Hex="#FFEBEE" RGB="255, 235, 238" Name="Ошибка 50 (очень светлый)"/>
+                    <Color Hex="#FFCDD2" RGB="255, 205, 210" Name="Ошибка 100 (светлый)"/>
+                    <Color Hex="#EF9A9A" RGB="239, 154, 154" Name="Ошибка 200"/>
+                    <Color Hex="#E57373" RGB="229, 115, 115" Name="Ошибка 300"/>
+                    <Color Hex="#EF5350" RGB="239, 83, 80" Name="Ошибка 400"/>
+                    <Color Hex="#F44336" RGB="244, 67, 54" Name="Ошибка 500 (базовый)"/>
+                    <Color Hex="#E53935" RGB="229, 57, 53" Name="Ошибка 600"/>
+                    <Color Hex="#D32F2F" RGB="211, 47, 47" Name="Ошибка 700"/>
+                    <Color Hex="#C62828" RGB="198, 40, 40" Name="Ошибка 800"/>
+                    <Color Hex="#B71C1C" RGB="183, 28, 28" Name="Ошибка 900 (тёмный)"/>
+                </Colors>
+            </x:XData>
+        </XmlDataProvider>
+
+        <!-- Цвет Информация (голубой) - 10 оттенков -->
+        <XmlDataProvider x:Key="InfoColors">
+            <x:XData>
+                <Colors xmlns="">
+                    <Color Hex="#E0F7FA" RGB="224, 247, 250" Name="Информация 50 (очень светлый)"/>
+                    <Color Hex="#B2EBF2" RGB="178, 235, 242" Name="Информация 100 (светлый)"/>
+                    <Color Hex="#80DEEA" RGB="128, 222, 234" Name="Информация 200"/>
+                    <Color Hex="#4DD0E1" RGB="77, 208, 225" Name="Информация 300"/>
+                    <Color Hex="#26C6DA" RGB="38, 198, 218" Name="Информация 400"/>
+                    <Color Hex="#00BCD4" RGB="0, 188, 212" Name="Информация 500 (базовый)"/>
+                    <Color Hex="#00ACC1" RGB="0, 172, 193" Name="Информация 600"/>
+                    <Color Hex="#0097A7" RGB="0, 151, 167" Name="Информация 700"/>
+                    <Color Hex="#00838F" RGB="0, 131, 143" Name="Информация 800"/>
+                    <Color Hex="#006064" RGB="0, 96, 100" Name="Информация 900 (тёмный)"/>
+                </Colors>
+            </x:XData>
+        </XmlDataProvider>
+        <ContextMenu x:Key="DemoContextMenu">
+            <MenuItem Header="Копировать"/>
+            <MenuItem Header="Вставить"/>
+            <Separator/>
+            <MenuItem Header="Свойства"/>
+        </ContextMenu>
+    </Window.Resources>
+
+    <DockPanel>
+        <!-- Главное меню приложения -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Открыть"/>
+                <MenuItem Header="Сохранить"/>
+                <Separator/>
+                <MenuItem Header="Выход"/>
+            </MenuItem>
+            <MenuItem Header="Правка">
+                <MenuItem Header="Отменить"/>
+                <MenuItem Header="Повторить"/>
+            </MenuItem>
+            <MenuItem Header="Справка">
+                <MenuItem Header="О программе"/>
+            </MenuItem>
+        </Menu>
+
+        <!-- Основной контейнер с вкладками -->
+        <TabControl Margin="5" SelectionChanged="TabControl_SelectionChanged">
+
+            <!-- 1.a. Вкладка "Основное" -->
+            <TabItem Header="Основное">
+                <StackPanel Margin="15">
+                    <GroupBox Header="Настройки персонализации" Margin="0,0,0,15">
+                        <StackPanel Margin="10">
+                            <TextBlock Text="Выберите тему приложения:" Margin="0,0,0,5"/>
+                            <ComboBox Margin="0,0,0,15" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
+                                <ComboBoxItem Content="Светлая тема"/>
+                                <ComboBoxItem Content="Темная тема"/>
+                                <ComboBoxItem Content="Высокая контрастность"/>
+                            </ComboBox>
+
+                            <TextBlock Text="Выберите язык приложения:" Margin="0,0,0,5"/>
+                            <ComboBox SelectedIndex="0">
+                                <ComboBoxItem Content="Русский"/>
+                                <ComboBoxItem Content="English"/>
+                                <ComboBoxItem Content="Deutsch"/>
+                            </ComboBox>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="Настройки шрифтов" Margin="0,0,0,15">
+                        <StackPanel Margin="10">
+                            <TextBlock Text="Выберите шрифт:" Margin="0,0,0,5"/>
+                            <ComboBox Margin="0,0,0,15" SelectedIndex="0">
+                                <ComboBoxItem Content="Segoe UI"/>
+                                <ComboBoxItem Content="Arial"/>
+                                <ComboBoxItem Content="Times New Roman"/>
+                                <ComboBoxItem Content="Consolas"/>
+                            </ComboBox>
+
+                            <TextBlock Text="Размер шрифта:" Margin="0,0,0,5"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Slider x:Name="slider" Width="250" Minimum="8" Maximum="24" Value="12" 
+                                        TickFrequency="1" IsSnapToTickEnabled="True"/>
+                                <TextBlock Text="{Binding Value, ElementName=slider}" VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 1.b. Вкладка "Цветовая палитра" -->
+            <TabItem Header="Цветовая палитра">
+                <ScrollViewer Margin="15">
+                    <StackPanel>
+                        <TextBlock Text="Текущая тема приложения: Светлая" FontSize="18" FontWeight="Bold" Margin="0,0,0,15" Foreground="#333333"/>
+
+                        <GroupBox Header="Группированные цвета" Margin="0,0,0,15">
+                            <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
+                                <StackPanel Margin="10" HorizontalAlignment="Center">
+                                    <Rectangle Width="60" Height="60" Fill="#2196F3" Stroke="Gray" RadiusX="5" RadiusY="5"/>
+                                    <TextBlock Text="Основной" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <StackPanel Margin="10" HorizontalAlignment="Center">
+                                    <Rectangle Width="60" Height="60" Fill="#FF9800" Stroke="Gray" RadiusX="5" RadiusY="5"/>
+                                    <TextBlock Text="Акцентный" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <StackPanel Margin="10" HorizontalAlignment="Center">
+                                    <Rectangle Width="60" Height="60" Fill="#4CAF50" Stroke="Gray" RadiusX="5" RadiusY="5"/>
+                                    <TextBlock Text="Успех" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <StackPanel Margin="10" HorizontalAlignment="Center">
+                                    <Rectangle Width="60" Height="60" Fill="#F44336" Stroke="Gray" RadiusX="5" RadiusY="5"/>
+                                    <TextBlock Text="Ошибка" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                                <StackPanel Margin="10" HorizontalAlignment="Center">
+                                    <Rectangle Width="60" Height="60" Fill="#00BCD4" Stroke="Gray" RadiusX="5" RadiusY="5"/>
+                                    <TextBlock Text="Информация" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- Основной цвет (синий) -->
+                        <GroupBox Header="Палитра основного цвета (10 оттенков)" Margin="0,0,0,15">
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource PrimaryColors}, XPath=Colors/Color}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Fill="{Binding XPath=@Hex}" Width="60" Height="30" Stroke="Gray" RadiusX="3" RadiusY="3"/>
+                                            <TextBlock Text="{Binding XPath=@RGB}" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding XPath=@Name}" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+
+                        <!-- Акцентный цвет (оранжевый) -->
+                        <GroupBox Header="Палитра акцентного цвета (10 оттенков)" Margin="0,0,0,15">
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource AccentColors}, XPath=Colors/Color}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Fill="{Binding XPath=@Hex}" Width="60" Height="30" Stroke="Gray" RadiusX="3" RadiusY="3"/>
+                                            <TextBlock Text="{Binding XPath=@RGB}" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding XPath=@Name}" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+
+                        <!-- Цвет Успех (зелёный) -->
+                        <GroupBox Header="Палитра цвета 'Успех' (10 оттенков)" Margin="0,0,0,15">
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource SuccessColors}, XPath=Colors/Color}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Fill="{Binding XPath=@Hex}" Width="60" Height="30" Stroke="Gray" RadiusX="3" RadiusY="3"/>
+                                            <TextBlock Text="{Binding XPath=@RGB}" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding XPath=@Name}" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+
+                        <!-- Цвет Ошибка (красный) -->
+                        <GroupBox Header="Палитра цвета 'Ошибка' (10 оттенков)" Margin="0,0,0,15">
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource ErrorColors}, XPath=Colors/Color}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Fill="{Binding XPath=@Hex}" Width="60" Height="30" Stroke="Gray" RadiusX="3" RadiusY="3"/>
+                                            <TextBlock Text="{Binding XPath=@RGB}" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding XPath=@Name}" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+
+                        <!-- Цвет Информация (голубой) -->
+                        <GroupBox Header="Палитра цвета 'Информация' (10 оттенков)" Margin="0,0,0,15">
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource InfoColors}, XPath=Colors/Color}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Fill="{Binding XPath=@Hex}" Width="60" Height="30" Stroke="Gray" RadiusX="3" RadiusY="3"/>
+                                            <TextBlock Text="{Binding XPath=@RGB}" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding XPath=@Name}" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- 1.c. Вкладка "Элементы управления" -->
+            <TabItem Header="Элементы управления">
+                <ScrollViewer Margin="15">
+                    <StackPanel>
+                        <!-- Кнопки -->
+                        <Expander Header="Кнопки" IsExpanded="True" Margin="0,5">
+                            <StackPanel Orientation="Horizontal" Margin="10">
+                                <Button Content="Обычная кнопка" Margin="5" Padding="10,5" 
+                                        ToolTip="Это всплывающая подсказка для обычной кнопки"/>
+                                <Button Margin="5" Padding="10,5" ToolTip="Кнопка с пиктограммой">
+                                    <Button.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="Копировать"/>
+                                            <MenuItem Header="Вставить"/>
+                                            <Separator/>
+                                            <MenuItem Header="Свойства"/>
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Path Data="M 10,50 L 50,10 L 90,50 Z" Fill="Black" Width="16" Height="16" Margin="0,0,5,0"/>
+                                        <TextBlock Text="®С иконкой" Width="94"/>
+                                    </StackPanel>
+                                </Button>
+                                <ToggleButton Content="Переключатель" Margin="5" Padding="10,5"/>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- Поля ввода и списки -->
+                        <Expander Header="Поля ввода и списки" IsExpanded="True" Margin="0,5">
+                            <StackPanel Margin="10">
+                                <TextBox Text="TextBox: введите обычный текст" Margin="0,5" Padding="5"/>
+                                <PasswordBox Password="secretPassword" Margin="0,5" Padding="5"/>
+                                <RichTextBox Height="60" Margin="0,5" BorderBrush="Gray" BorderThickness="1">
+                                    <FlowDocument>
+                                        <Paragraph>RichTextBox: поддерживает форматированный текст.</Paragraph>
+                                    </FlowDocument>
+                                </RichTextBox>
+                                <StackPanel Orientation="Horizontal">
+                                    <ComboBox Text="ComboBox (выбор или ввод)" IsEditable="True" Width="200" Margin="0,5,10,5" Padding="5"/>
+                                    <ListBox Width="200" Height="60" Margin="0,5">
+                                        <ListBoxItem Content="Элемент списка 1"/>
+                                        <ListBoxItem Content="Элемент списка 2"/>
+                                        <ListBoxItem Content="Элемент списка 3"/>
+                                    </ListBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- Текстовые элементы -->
+                        <Expander Header="Текстовые элементы" IsExpanded="True" Margin="0,5">
+                            <StackPanel Margin="10">
+                                <TextBlock Text="Заголовок уровня 1" FontSize="24" FontWeight="Bold" Margin="0,5"/>
+                                <TextBlock Text="Заголовок уровня 2" FontSize="20" FontWeight="SemiBold" Margin="0,5"/>
+                                <TextBlock Text="Заголовок уровня 3" FontSize="16" FontWeight="SemiBold" Margin="0,5"/>
+                                <TextBlock Text="Обычный текст в элементе TextBlock. Используется для вывода информации." Margin="0,5"/>
+                                <Label Content="Подпись в элементе Label (с рамкой)" BorderBrush="Gray" BorderThickness="1" Margin="0,5" Padding="5"/>
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- Древовидная структура и таблица -->
+                        <!-- Древовидная структура и таблица -->
+                        <Expander Header="TreeView и DataGrid" IsExpanded="True" Margin="0,5">
+                            <StackPanel Margin="10">
+
+                                <!-- TreeView с данными -->
+                                <TextBlock Text="TreeView — древовидный список элементов WPF:" FontWeight="Bold" Margin="0,0,0,5"/>
+                                <TreeView Height="150" Margin="0,5" BorderBrush="Gray" BorderThickness="1"
+                  ItemsSource="{Binding Source={StaticResource TreeData}, XPath=Tree/Node}">
+                                    <TreeView.ItemTemplate>
+                                        <HierarchicalDataTemplate ItemsSource="{Binding XPath=Node}">
+                                            <TextBlock Text="{Binding XPath=@Name}"/>
+                                        </HierarchicalDataTemplate>
+                                    </TreeView.ItemTemplate>
+                                </TreeView>
+
+                                <!-- DataGrid с данными -->
+                                <TextBlock Text="DataGrid — таблица элементов управления:" FontWeight="Bold" Margin="0,10,0,5"/>
+                                <DataGrid Height="220" Margin="0,5" AutoGenerateColumns="False" IsReadOnly="True"
+                  ItemsSource="{Binding Source={StaticResource GridData}, XPath=Items/Item}"
+                  HeadersVisibility="Column" GridLinesVisibility="All"
+                  BorderBrush="Gray" BorderThickness="1">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Название элемента" Binding="{Binding XPath=@Name}" Width="*"/>
+                                        <DataGridTextColumn Header="Описание" Binding="{Binding XPath=@Description}" Width="2*"/>
+                                        <DataGridTextColumn Header="Состояние" Binding="{Binding XPath=@State}" Width="*"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                            </StackPanel>
+                        </Expander>
+
+                        <!-- Индикатор прогресса -->
+                        <Expander Header="ProgressBar" IsExpanded="False" Margin="0,5">
+                            <StackPanel Margin="10">
+                                <ProgressBar Value="65" Height="25" Margin="0,5" Maximum="100"/>
+                                <TextBlock Text="Прогресс: 65%" HorizontalAlignment="Center" Margin="0,5"/>
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- 1.d. Вкладка "Контейнеры компоновки" -->
+            <TabItem Header="Контейнеры компоновки">
+                <ScrollViewer Margin="15">
+                    <StackPanel>
+                        <GroupBox Header="StackPanel (Вертикальный)" Margin="0,5">
+                            <StackPanel Margin="10" Background="#F0F0F0">
+                                <Rectangle Fill="#FF5252" Width="60" Height="40" Margin="2"/>
+                                <Rectangle Fill="#4CAF50" Width="60" Height="40" Margin="2"/>
+                                <Rectangle Fill="#2196F3" Width="60" Height="40" Margin="2"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="StackPanel (Горизонтальный)" Margin="0,5">
+                            <StackPanel Orientation="Horizontal" Margin="10" Background="#F0F0F0">
+                                <Rectangle Fill="#FF5252" Width="60" Height="40" Margin="2"/>
+                                <Rectangle Fill="#4CAF50" Width="60" Height="40" Margin="2"/>
+                                <Rectangle Fill="#2196F3" Width="60" Height="40" Margin="2"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="WrapPanel (Перенос элементов)" Margin="0,5">
+                            <WrapPanel Margin="10" Background="#F0F0F0">
+                                <Rectangle Fill="#FF5252" Width="80" Height="40" Margin="2"/>
+                                <Rectangle Fill="#4CAF50" Width="80" Height="40" Margin="2"/>
+                                <Rectangle Fill="#2196F3" Width="80" Height="40" Margin="2"/>
+                                <Rectangle Fill="#FFC107" Width="80" Height="40" Margin="2"/>
+                                <Rectangle Fill="#9C27B0" Width="80" Height="40" Margin="2"/>
+                            </WrapPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="DockPanel (Пристыковка к краям)" Margin="0,5">
+                            <DockPanel Margin="10" Background="#F0F0F0" Height="140">
+                                <Rectangle Fill="#FF5252" Width="60" DockPanel.Dock="Left" Margin="2"/>
+                                <Rectangle Fill="#4CAF50" Height="40" DockPanel.Dock="Top" Margin="2"/>
+                                <Rectangle Fill="#2196F3" Height="40" DockPanel.Dock="Bottom" Margin="2"/>
+                                <Rectangle Fill="#FFC107" Margin="2"/>
+                            </DockPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Grid (Табличная структура)" Margin="0,5">
+                            <Grid Margin="10" Background="#F0F0F0" Height="140">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Fill="#FF5252" Grid.Row="0" Grid.Column="0" Margin="2"/>
+                                <Rectangle Fill="#4CAF50" Grid.Row="0" Grid.Column="1" Margin="2"/>
+                                <Rectangle Fill="#2196F3" Grid.Row="1" Grid.Column="0" Margin="2"/>
+                                <Rectangle Fill="#FFC107" Grid.Row="1" Grid.Column="1" Margin="2"/>
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Canvas (Абсолютное позиционирование)" Margin="0,5">
+                            <Canvas Margin="10" Background="#F0F0F0" Height="140">
+                                <Rectangle Fill="#FF5252" Width="60" Height="40" Canvas.Left="20" Canvas.Top="20"/>
+                                <Rectangle Fill="#4CAF50" Width="60" Height="40" Canvas.Left="100" Canvas.Top="50"/>
+                                <Rectangle Fill="#2196F3" Width="60" Height="40" Canvas.Left="60" Canvas.Top="90"/>
+                            </Canvas>
+                        </GroupBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+        </TabControl>
+    </DockPanel>
+</Window>
