@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="Lab_1/Lab_1.csproj" />
+  <Project Path="WpfResources/WpfResources.csproj" Id="f04e24fa-0ab0-4499-8c8c-0a551d446bd9" />
 </Solution>
