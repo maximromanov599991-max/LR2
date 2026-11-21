@@ -1,15 +1,14 @@
-﻿using Lab_1.Commands;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
+using Lab_1.Commands;
 using Lab_1.Models;
 using Lab_1.Services;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows;
 
 namespace Lab_1.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private string _selectedTheme = "Light";
+        private string _selectedTheme = "Светлая тема";
         public string SelectedTheme
         {
             get => _selectedTheme;
@@ -17,14 +16,12 @@ namespace Lab_1.ViewModels
             {
                 if (SetProperty(ref _selectedTheme, value))
                 {
-                    // Применяем тему при изменении
                     ThemeManager.ApplyTheme(value);
-                    OnPropertyChanged(nameof(CurrentThemeText));
                 }
             }
         }
 
-        private string _selectedLanguage = "ru";
+        private string _selectedLanguage = "Русский";
         public string SelectedLanguage
         {
             get => _selectedLanguage;
@@ -32,10 +29,7 @@ namespace Lab_1.ViewModels
             {
                 if (SetProperty(ref _selectedLanguage, value))
                 {
-                    // Меняем язык
-                    LanguageManager.Instance.CurrentLanguage = value;
-                    OnPropertyChanged(nameof(CurrentThemeText));
-                    OnPropertyChanged(nameof(Translations));
+                    LanguageManager.ApplyLanguage(value);
                 }
             }
         }
@@ -81,28 +75,11 @@ namespace Lab_1.ViewModels
         public RelayCommand PasteCommand { get; }
         public RelayCommand UpdateExplicitCommand { get; }
 
-        /// <summary>
-        /// Текст текущей темы для отображения.
-        /// </summary>
-        public string CurrentThemeText
-        {
-            get
-            {
-                string themeKey = _selectedTheme == "Light" ? "LightTheme" : "DarkTheme";
-                string themeName = LanguageManager.Instance[themeKey];
-                return string.Format(LanguageManager.Instance["CurrentTheme"], themeName);
-            }
-        }
-
-        /// <summary>
-        /// Словарь переводов для привязки в XAML.
-        /// </summary>
-        public Dictionary<string, string> Translations => LanguageManager.Instance.Translations;
-
         public MainViewModel()
         {
-            // Применяем начальную тему
+            // Применяем начальные настройки
             ThemeManager.ApplyTheme(_selectedTheme);
+            LanguageManager.ApplyLanguage(_selectedLanguage);
 
             SourceItems.Add(new ItemModel { Name = "Элемент 1", Description = "Тестовое описание", Status = "Активен" });
             SourceItems.Add(new ItemModel { Name = "Элемент 2", Description = "Еще одно описание", Status = "Ожидает" });
