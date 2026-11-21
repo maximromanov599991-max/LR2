@@ -76,39 +76,49 @@
         <TabControl Margin="10">
 
             <!-- ВКЛАДКА 1: Основное -->
-            <TabItem Header="Основное">
+            <TabItem Header="{Binding Translations[TabMain]}">
                 <ScrollViewer>
                     <StackPanel Margin="15">
-                        <GroupBox Header="Настройки персонализации" Style="{StaticResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[PersonalizationSettings]}" 
+                      Style="{StaticResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
-                                <TextBlock Text="Тема приложения:" Style="{StaticResource LabelStyle}"/>
-                                <ComboBox Text="{Binding SelectedTheme, Mode=TwoWay}" Style="{StaticResource AppInputStyle}">
-                                    <ComboBoxItem Content="Светлая тема"/>
-                                    <ComboBoxItem Content="Темная тема"/>
+                                <TextBlock Text="{Binding Translations[ThemeLabel]}" 
+                               Style="{StaticResource LabelStyle}"/>
+                                <ComboBox Text="{Binding SelectedTheme, Mode=TwoWay}" 
+                              Style="{StaticResource AppInputStyle}">
+                                    <ComboBoxItem Content="{Binding Translations[LightTheme]}"/>
+                                    <ComboBoxItem Content="{Binding Translations[DarkTheme]}"/>
                                 </ComboBox>
 
-                                <TextBlock Text="Язык приложения:" Style="{StaticResource LabelStyle}"/>
-                                <ComboBox Style="{StaticResource AppInputStyle}">
-                                    <ComboBoxItem Content="Русский"/>
-                                    <ComboBoxItem Content="English"/>
+                                <TextBlock Text="{Binding Translations[LanguageLabel]}" 
+                               Style="{StaticResource LabelStyle}"/>
+                                <ComboBox Text="{Binding SelectedLanguage, Mode=TwoWay}" 
+                              Style="{StaticResource AppInputStyle}">
+                                    <ComboBoxItem Content="{Binding Translations[Russian]}"/>
+                                    <ComboBoxItem Content="{Binding Translations[English]}"/>
                                 </ComboBox>
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="Настройки шрифтов" Style="{StaticResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[FontSettings]}" 
+                      Style="{StaticResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
-                                <TextBlock Text="Шрифт:" Style="{StaticResource LabelStyle}"/>
+                                <TextBlock Text="{Binding Translations[FontLabel]}" 
+                               Style="{StaticResource LabelStyle}"/>
                                 <ComboBox Style="{StaticResource AppInputStyle}">
                                     <ComboBoxItem Content="Segoe UI"/>
                                     <ComboBoxItem Content="Arial"/>
                                     <ComboBoxItem Content="Times New Roman"/>
                                 </ComboBox>
 
-                                <TextBlock Text="Размер шрифта:" Style="{StaticResource LabelStyle}"/>
-                                <Slider Minimum="10" Maximum="24" Value="{Binding FontSize, Mode=TwoWay}"
-                                        TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,0,0,10"/>
+                                <TextBlock Text="{Binding Translations[FontSizeLabel]}" 
+                               Style="{StaticResource LabelStyle}"/>
+                                <Slider Minimum="10" Maximum="24" 
+                            Value="{Binding FontSize, Mode=TwoWay}"
+                            TickFrequency="1" IsSnapToTickEnabled="True" 
+                            Margin="0,0,0,10"/>
                                 <TextBlock Text="{Binding FontSize, StringFormat='Текущий размер: {0}'}"
-                                           HorizontalAlignment="Center" FontWeight="Bold"/>
+                               HorizontalAlignment="Center" FontWeight="Bold"/>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
@@ -178,7 +188,7 @@
                                 <Button Content="Обычная" Style="{StaticResource PrimaryButtonStyle}" ToolTip="Всплывающая подсказка"/>
                                 <Button Content="Успех" Style="{StaticResource SuccessButtonStyle}"/>
                                 <Button Content="Удалить" Style="{StaticResource DangerButtonStyle}"/>
-                                <ToggleButton Content="Переключатель" Style="{StaticResource PrimaryButtonStyle}"/>
+                                <ToggleButton Content="Переключатель"/>
                             </StackPanel>
                         </Expander>
 

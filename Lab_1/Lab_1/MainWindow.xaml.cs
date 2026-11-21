@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Lab_1.ViewModels;
+using System.Windows;
 
 namespace Lab_1
 {
@@ -7,6 +8,7 @@ namespace Lab_1
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel();
         }
     }
 }
