@@ -12,6 +12,76 @@
     </Window.DataContext>
 
     <Window.Resources>
+        <!-- TreeView данные (Русский) -->
+        <XmlDataProvider x:Key="TreeDataRu">
+            <x:XData>
+                <Tree xmlns="">
+                    <Node Name="Элементы управления">
+                        <Node Name="Кнопки">
+                            <Node Name="Button"/>
+                            <Node Name="ToggleButton"/>
+                        </Node>
+                        <Node Name="Поля ввода">
+                            <Node Name="TextBox"/>
+                            <Node Name="PasswordBox"/>
+                        </Node>
+                    </Node>
+                    <Node Name="Контейнеры">
+                        <Node Name="StackPanel"/>
+                        <Node Name="Grid"/>
+                        <Node Name="Canvas"/>
+                    </Node>
+                </Tree>
+            </x:XData>
+        </XmlDataProvider>
+
+        <!-- TreeView данные (English) -->
+        <XmlDataProvider x:Key="TreeDataEn">
+            <x:XData>
+                <Tree xmlns="">
+                    <Node Name="Controls">
+                        <Node Name="Buttons">
+                            <Node Name="Button"/>
+                            <Node Name="ToggleButton"/>
+                        </Node>
+                        <Node Name="Input Fields">
+                            <Node Name="TextBox"/>
+                            <Node Name="PasswordBox"/>
+                        </Node>
+                    </Node>
+                    <Node Name="Containers">
+                        <Node Name="StackPanel"/>
+                        <Node Name="Grid"/>
+                        <Node Name="Canvas"/>
+                    </Node>
+                </Tree>
+            </x:XData>
+        </XmlDataProvider>
+
+        <!-- DemoGrid данные (Русский) -->
+        <XmlDataProvider x:Key="DemoGridDataRu">
+            <x:XData>
+                <Items xmlns="">
+                    <Item Name="Button" Description="Обычная кнопка" Status="Активна"/>
+                    <Item Name="TextBox" Description="Поле ввода текста" Status="Пустое"/>
+                    <Item Name="ComboBox" Description="Раскрывающийся список" Status="Выбрано"/>
+                    <Item Name="CheckBox" Description="Флажок" Status="Отмечен"/>
+                </Items>
+            </x:XData>
+        </XmlDataProvider>
+
+        <!-- DemoGrid данные (English) -->
+        <XmlDataProvider x:Key="DemoGridDataEn">
+            <x:XData>
+                <Items xmlns="">
+                    <Item Name="Button" Description="Normal button" Status="Active"/>
+                    <Item Name="TextBox" Description="Text input field" Status="Empty"/>
+                    <Item Name="ComboBox" Description="Dropdown list" Status="Selected"/>
+                    <Item Name="CheckBox" Description="Checkbox" Status="Checked"/>
+                </Items>
+            </x:XData>
+        </XmlDataProvider>
+
         <!-- Палитра основного цвета (синий) -->
         <XmlDataProvider x:Key="PrimaryColors">
             <x:XData>
@@ -101,41 +171,6 @@
                 </Colors>
             </x:XData>
         </XmlDataProvider>
-
-        <!-- Данные для TreeView -->
-        <XmlDataProvider x:Key="TreeData">
-            <x:XData>
-                <Tree xmlns="">
-                    <Node Name="Элементы управления">
-                        <Node Name="Кнопки">
-                            <Node Name="Button"/>
-                            <Node Name="ToggleButton"/>
-                        </Node>
-                        <Node Name="Поля ввода">
-                            <Node Name="TextBox"/>
-                            <Node Name="PasswordBox"/>
-                        </Node>
-                    </Node>
-                    <Node Name="Контейнеры">
-                        <Node Name="StackPanel"/>
-                        <Node Name="Grid"/>
-                        <Node Name="Canvas"/>
-                    </Node>
-                </Tree>
-            </x:XData>
-        </XmlDataProvider>
-
-        <!-- Демо-данные для DataGrid -->
-        <XmlDataProvider x:Key="DemoGridData">
-            <x:XData>
-                <Items xmlns="">
-                    <Item Name="Button" Description="Обычная кнопка" Status="Активна"/>
-                    <Item Name="TextBox" Description="Поле ввода текста" Status="Пустое"/>
-                    <Item Name="ComboBox" Description="Раскрывающийся список" Status="Выбрано"/>
-                    <Item Name="CheckBox" Description="Флажок" Status="Отмечен"/>
-                </Items>
-            </x:XData>
-        </XmlDataProvider>
     </Window.Resources>
 
     <DockPanel>
@@ -177,7 +212,7 @@
 
         <TabControl Margin="10">
 
-            <!-- ==================== ВКЛАДКА 1: ОСНОВНОЕ ==================== -->
+            <!-- ВКЛАДКА 1: ОСНОВНОЕ -->
             <TabItem Header="{Binding Translations[TabMain]}">
                 <ScrollViewer>
                     <StackPanel Margin="15">
@@ -231,14 +266,13 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ==================== ВКЛАДКА 2: ЦВЕТОВАЯ ПАЛИТРА ==================== -->
+            <!-- ВКЛАДКА 2: ЦВЕТОВАЯ ПАЛИТРА -->
             <TabItem Header="{Binding Translations[TabPalette]}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
                         <TextBlock Text="{Binding CurrentThemeText}" 
                                    Style="{DynamicResource HeaderTextBlockStyle}"/>
 
-                        <!-- Основные цвета -->
                         <GroupBox Header="{Binding Translations[MainColors]}" 
                                   Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
@@ -275,7 +309,6 @@
                             </StackPanel>
                         </GroupBox>
 
-                        <!-- Таблица основного цвета -->
                         <GroupBox Header="{Binding Translations[ColorPalette]}" 
                                   Style="{DynamicResource AppGroupBoxStyle}">
                             <ItemsControl ItemsSource="{Binding Source={StaticResource PrimaryColors}, XPath=Colors/Color}">
@@ -299,7 +332,6 @@
                             </ItemsControl>
                         </GroupBox>
 
-                        <!-- Таблица акцентного цвета -->
                         <GroupBox Header="{Binding Translations[AccentPalette]}" 
                                   Style="{DynamicResource AppGroupBoxStyle}">
                             <ItemsControl ItemsSource="{Binding Source={StaticResource AccentColors}, XPath=Colors/Color}">
@@ -323,7 +355,6 @@
                             </ItemsControl>
                         </GroupBox>
 
-                        <!-- Таблица цвета Успех -->
                         <GroupBox Header="{Binding Translations[SuccessPalette]}" 
                                   Style="{DynamicResource AppGroupBoxStyle}">
                             <ItemsControl ItemsSource="{Binding Source={StaticResource SuccessColors}, XPath=Colors/Color}">
@@ -347,7 +378,6 @@
                             </ItemsControl>
                         </GroupBox>
 
-                        <!-- Таблица цвета Ошибка -->
                         <GroupBox Header="{Binding Translations[ErrorPalette]}" 
                                   Style="{DynamicResource AppGroupBoxStyle}">
                             <ItemsControl ItemsSource="{Binding Source={StaticResource ErrorColors}, XPath=Colors/Color}">
@@ -371,7 +401,6 @@
                             </ItemsControl>
                         </GroupBox>
 
-                        <!-- Таблица цвета Информация -->
                         <GroupBox Header="{Binding Translations[InfoPalette]}" 
                                   Style="{DynamicResource AppGroupBoxStyle}">
                             <ItemsControl ItemsSource="{Binding Source={StaticResource InfoColors}, XPath=Colors/Color}">
@@ -398,7 +427,7 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ==================== ВКЛАДКА 3: ЭЛЕМЕНТЫ УПРАВЛЕНИЯ ==================== -->
+            <!-- ВКЛАДКА 3: ЭЛЕМЕНТЫ УПРАВЛЕНИЯ -->
             <TabItem Header="{Binding Translations[TabControls]}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
@@ -418,15 +447,19 @@
 
                         <Expander Header="{Binding Translations[InputFields]}" IsExpanded="True" Margin="0,5">
                             <StackPanel Margin="10">
-                                <TextBox Text="TextBox: введите текст" Style="{DynamicResource AppInputStyle}"/>
-                                <PasswordBox Password="secret" Padding="6,4" Margin="0,0,0,10" 
+                                <TextBox Text="{Binding Translations[TextBoxPlaceholder]}" 
+                                         Style="{DynamicResource AppInputStyle}"/>
+                                <!-- ИСПРАВЛЕНИЕ: PasswordBox не поддерживает Binding для Password -->
+                                <PasswordBox Password="secret" 
+                                             Padding="6,4" Margin="0,0,0,10" 
                                              BorderBrush="#CCCCCC" BorderThickness="1"/>
                                 <StackPanel Orientation="Horizontal">
-                                    <ComboBox Text="ComboBox" IsEditable="True" Width="200" 
+                                    <ComboBox Text="{Binding Translations[ComboBoxPlaceholder]}" 
+                                              IsEditable="True" Width="200" 
                                               Margin="0,0,10,0" Style="{DynamicResource AppInputStyle}"/>
                                     <ListBox Width="200" Height="60">
-                                        <ListBoxItem Content="Элемент 1"/>
-                                        <ListBoxItem Content="Элемент 2"/>
+                                        <ListBoxItem Content="{Binding Translations[ListBoxItem1]}"/>
+                                        <ListBoxItem Content="{Binding Translations[ListBoxItem2]}"/>
                                     </ListBox>
                                 </StackPanel>
                             </StackPanel>
@@ -434,18 +467,31 @@
 
                         <Expander Header="{Binding Translations[TextElements]}" IsExpanded="True" Margin="0,5">
                             <StackPanel Margin="10">
-                                <TextBlock Text="Заголовок уровня 1" FontSize="24" FontWeight="Bold" Margin="0,5"/>
-                                <TextBlock Text="Заголовок уровня 2" FontSize="20" FontWeight="SemiBold" Margin="0,5"/>
-                                <TextBlock Text="Обычный текст в TextBlock." Margin="0,5"/>
-                                <Label Content="Подпись в Label" BorderBrush="Gray" BorderThickness="1" 
-                                       Padding="5" Margin="0,5"/>
+                                <TextBlock Text="{Binding Translations[Heading1]}" 
+                                           FontSize="24" FontWeight="Bold" Margin="0,5"/>
+                                <TextBlock Text="{Binding Translations[Heading2]}" 
+                                           FontSize="20" FontWeight="SemiBold" Margin="0,5"/>
+                                <TextBlock Text="{Binding Translations[NormalText]}" Margin="0,5"/>
+                                <Label Content="{Binding Translations[LabelCaption]}" 
+                                       BorderBrush="Gray" BorderThickness="1" Padding="5" Margin="0,5"/>
                             </StackPanel>
                         </Expander>
 
                         <Expander Header="{Binding Translations[TreeViewDataGrid]}" IsExpanded="True" Margin="0,5">
                             <StackPanel Margin="10">
+                                <!-- ИСПРАВЛЕНИЕ: убран Style из тега, оставлен только в TreeView.Style с BasedOn -->
                                 <TreeView Height="120" BorderBrush="Gray" BorderThickness="1" Margin="0,0,0,10"
-                                          ItemsSource="{Binding Source={StaticResource TreeData}, XPath=Tree/Node}">
+                                          ItemsSource="{Binding Source={StaticResource TreeDataRu}, XPath=Tree/Node}">
+                                    <TreeView.Style>
+                                        <Style TargetType="TreeView" BasedOn="{StaticResource {x:Type TreeView}}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding LanguageSuffix}" Value="En">
+                                                    <Setter Property="ItemsSource" 
+                                                            Value="{Binding Source={StaticResource TreeDataEn}, XPath=Tree/Node}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TreeView.Style>
                                     <TreeView.ItemTemplate>
                                         <HierarchicalDataTemplate ItemsSource="{Binding XPath=Node}">
                                             <TextBlock Text="{Binding XPath=@Name}"/>
@@ -453,13 +499,26 @@
                                     </TreeView.ItemTemplate>
                                 </TreeView>
 
+                                <!-- ИСПРАВЛЕНИЕ: убран Style из тега, оставлен только в DataGrid.Style с BasedOn -->
                                 <DataGrid Height="120" AutoGenerateColumns="False" IsReadOnly="True"
-                                          ItemsSource="{Binding Source={StaticResource DemoGridData}, XPath=Items/Item}"
-                                          Style="{DynamicResource AppDataGridStyle}">
+                                          ItemsSource="{Binding Source={StaticResource DemoGridDataRu}, XPath=Items/Item}">
+                                    <DataGrid.Style>
+                                        <Style TargetType="DataGrid" BasedOn="{StaticResource AppDataGridStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding LanguageSuffix}" Value="En">
+                                                    <Setter Property="ItemsSource" 
+                        Value="{Binding Source={StaticResource DemoGridDataEn}, XPath=Items/Item}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGrid.Style>
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="Название" Binding="{Binding XPath=@Name}" Width="*"/>
-                                        <DataGridTextColumn Header="Описание" Binding="{Binding XPath=@Description}" Width="2*"/>
-                                        <DataGridTextColumn Header="Статус" Binding="{Binding XPath=@Status}" Width="*"/>
+                                        <DataGridTextColumn Header="{Binding Translations[NameColumn]}" 
+                                                            Binding="{Binding XPath=@Name}" Width="*"/>
+                                        <DataGridTextColumn Header="{Binding Translations[DescriptionColumn]}" 
+                                                            Binding="{Binding XPath=@Description}" Width="2*"/>
+                                        <DataGridTextColumn Header="{Binding Translations[StatusColumn]}" 
+                                                            Binding="{Binding XPath=@Status}" Width="*"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </StackPanel>
@@ -476,7 +535,7 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ==================== ВКЛАДКА 4: КОНТЕЙНЕРЫ КОМПОНОВКИ ==================== -->
+            <!-- ВКЛАДКА 4: КОНТЕЙНЕРЫ КОМПОНОВКИ -->
             <TabItem Header="{Binding Translations[TabLayouts]}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
@@ -552,7 +611,7 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ==================== ВКЛАДКА 5: ТАБЛИЦЫ И КОМАНДЫ ==================== -->
+            <!-- ВКЛАДКА 5: ТАБЛИЦЫ И КОМАНДЫ -->
             <TabItem Header="{Binding Translations[TabTables]}">
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
@@ -611,44 +670,44 @@
                 <ScrollViewer Margin="15">
                     <StackPanel>
                         <TextBlock Text="{Binding Translations[BindingDemo]}" 
-                       Style="{DynamicResource HeaderTextBlockStyle}"/>
+                                   Style="{DynamicResource HeaderTextBlockStyle}"/>
 
                         <GroupBox Header="{Binding Translations[PropertyChanged]}" 
-                      Style="{DynamicResource AppGroupBoxStyle}">
+                                  Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
                                 <TextBox Text="{Binding BindingPropertyChanged, UpdateSourceTrigger=PropertyChanged}" 
-                             Style="{DynamicResource AppInputStyle}"/>
+                                         Style="{DynamicResource AppInputStyle}"/>
                                 <TextBlock Text="{Binding BindingPropertyChanged}" 
-                               FontStyle="Italic" Foreground="Gray"/>
+                                           FontStyle="Italic" Foreground="Gray"/>
                             </StackPanel>
                         </GroupBox>
 
                         <GroupBox Header="{Binding Translations[LostFocus]}" 
-                      Style="{DynamicResource AppGroupBoxStyle}">
+                                  Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
                                 <TextBox Text="{Binding BindingLostFocus, UpdateSourceTrigger=LostFocus}" 
-                             Style="{DynamicResource AppInputStyle}"/>
+                                         Style="{DynamicResource AppInputStyle}"/>
                                 <TextBlock Text="{Binding BindingLostFocus}" 
-                               FontStyle="Italic" Foreground="Gray"/>
+                                           FontStyle="Italic" Foreground="Gray"/>
                             </StackPanel>
                         </GroupBox>
 
-                        <!-- Explicit — с x:Name и обработчиком Click -->
                         <GroupBox Header="{Binding Translations[Explicit]}" 
-                      Style="{DynamicResource AppGroupBoxStyle}">
+                                  Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
                                 <TextBox x:Name="ExplicitTextBox"
-                             Text="{Binding BindingExplicit, UpdateSourceTrigger=Explicit}" 
-                             Style="{DynamicResource AppInputStyle}"/>
+                                         Text="{Binding BindingExplicit, UpdateSourceTrigger=Explicit}" 
+                                         Style="{DynamicResource AppInputStyle}"/>
                                 <Button Content="{Binding Translations[UpdateExplicit]}" 
-                            Click="UpdateExplicit_Click"
-                            Style="{DynamicResource PrimaryButtonStyle}" 
-                            HorizontalAlignment="Left" Margin="0,10,0,0"/>
+                                        Click="UpdateExplicit_Click"
+                                        Style="{DynamicResource PrimaryButtonStyle}" 
+                                        HorizontalAlignment="Left" Margin="0,10,0,0"/>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
+
         </TabControl>
     </DockPanel>
 </Window>

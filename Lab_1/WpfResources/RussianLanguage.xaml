@@ -1,9 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    
-    <sys:String x:Key="CurrentFontSize">Текущий размер: {0}</sys:String>
+
+    <!-- Заголовок приложения -->
     <sys:String x:Key="AppTitle">Лабораторная работа 2 - WPF MVVM</sys:String>
+
+    <!-- Вкладки -->
     <sys:String x:Key="TabMain">Основное</sys:String>
     <sys:String x:Key="TabPalette">Цветовая палитра</sys:String>
     <sys:String x:Key="TabControls">Элементы управления</sys:String>
@@ -11,19 +13,34 @@
     <sys:String x:Key="TabTables">Таблицы и Команды</sys:String>
     <sys:String x:Key="TabBindings">Типы привязок</sys:String>
 
+    <!-- Меню -->
+    <sys:String x:Key="FileMenu">Файл</sys:String>
+    <sys:String x:Key="EditMenu">Правка</sys:String>
+    <sys:String x:Key="HelpMenu">Справка</sys:String>
+    <sys:String x:Key="Open">Открыть</sys:String>
+    <sys:String x:Key="Save">Сохранить</sys:String>
+    <sys:String x:Key="Exit">Выход</sys:String>
+    <sys:String x:Key="Undo">Отменить</sys:String>
+    <sys:String x:Key="Redo">Повторить</sys:String>
+    <sys:String x:Key="About">О программе</sys:String>
+
+    <!-- Настройки персонализации -->
     <sys:String x:Key="PersonalizationSettings">Настройки персонализации</sys:String>
     <sys:String x:Key="ThemeLabel">Тема приложения:</sys:String>
     <sys:String x:Key="LanguageLabel">Язык приложения:</sys:String>
-    <sys:String x:Key="FontSettings">Настройки шрифтов</sys:String>
-    <sys:String x:Key="FontLabel">Шрифт:</sys:String>
-    <sys:String x:Key="FontSizeLabel">Размер шрифта:</sys:String>
-    <sys:String x:Key="CurrentFontSizeLabel">Текущий размер:</sys:String>
-
     <sys:String x:Key="LightTheme">Светлая тема</sys:String>
     <sys:String x:Key="DarkTheme">Тёмная тема</sys:String>
     <sys:String x:Key="Russian">Русский</sys:String>
     <sys:String x:Key="English">English</sys:String>
 
+    <!-- Настройки шрифтов -->
+    <sys:String x:Key="FontSettings">Настройки шрифтов</sys:String>
+    <sys:String x:Key="FontLabel">Шрифт:</sys:String>
+    <sys:String x:Key="FontSizeLabel">Размер шрифта:</sys:String>
+    <sys:String x:Key="CurrentFontSize">Текущий размер: {0}</sys:String>
+    <sys:String x:Key="CurrentThemeFormat">Текущая тема: {0}</sys:String>
+
+    <!-- Цветовая палитра -->
     <sys:String x:Key="MainColors">Основные цвета</sys:String>
     <sys:String x:Key="Primary">Основной</sys:String>
     <sys:String x:Key="Accent">Акцентный</sys:String>
@@ -31,30 +48,33 @@
     <sys:String x:Key="Error">Ошибка</sys:String>
     <sys:String x:Key="Info">Информация</sys:String>
     <sys:String x:Key="ColorPalette">Палитра основного цвета (10 оттенков)</sys:String>
+    <sys:String x:Key="AccentPalette">Палитра акцентного цвета (10 оттенков)</sys:String>
+    <sys:String x:Key="SuccessPalette">Палитра цвета «Успех» (10 оттенков)</sys:String>
+    <sys:String x:Key="ErrorPalette">Палитра цвета «Ошибка» (10 оттенков)</sys:String>
+    <sys:String x:Key="InfoPalette">Палитра цвета «Информация» (10 оттенков)</sys:String>
 
+    <!-- Элементы управления -->
     <sys:String x:Key="Buttons">Кнопки</sys:String>
     <sys:String x:Key="NormalButton">Обычная</sys:String>
-    <sys:String x:Key="IconButton">С иконкой</sys:String>
     <sys:String x:Key="SuccessButton">Успех</sys:String>
     <sys:String x:Key="DeleteButton">Удалить</sys:String>
     <sys:String x:Key="ToggleButton">Переключатель</sys:String>
     <sys:String x:Key="InputFields">Поля ввода и списки</sys:String>
+    <sys:String x:Key="TextBoxPlaceholder">TextBox: введите текст</sys:String>
+    <sys:String x:Key="ComboBoxPlaceholder">ComboBox</sys:String>
+    <sys:String x:Key="PasswordPlaceholder">секрет</sys:String>
+    <sys:String x:Key="ListBoxItem1">Элемент 1</sys:String>
+    <sys:String x:Key="ListBoxItem2">Элемент 2</sys:String>
     <sys:String x:Key="TextElements">Текстовые элементы</sys:String>
+    <sys:String x:Key="Heading1">Заголовок уровня 1</sys:String>
+    <sys:String x:Key="Heading2">Заголовок уровня 2</sys:String>
+    <sys:String x:Key="NormalText">Обычный текст в TextBlock.</sys:String>
+    <sys:String x:Key="LabelCaption">Подпись в Label</sys:String>
     <sys:String x:Key="TreeViewDataGrid">TreeView и DataGrid</sys:String>
     <sys:String x:Key="ProgressBar">ProgressBar</sys:String>
     <sys:String x:Key="ProgressText">Прогресс: 65%</sys:String>
 
-    <sys:String x:Key="Heading1">Заголовок уровня 1</sys:String>
-    <sys:String x:Key="Heading2">Заголовок уровня 2</sys:String>
-    <sys:String x:Key="Heading3">Заголовок уровня 3</sys:String>
-    <sys:String x:Key="NormalText">Обычный текст в TextBlock.</sys:String>
-    <sys:String x:Key="LabelCaption">Подпись в Label</sys:String>
-    <sys:String x:Key="TextBoxPlaceholder">TextBox: введите текст</sys:String>
-    <sys:String x:Key="ComboBoxPlaceholder">ComboBox</sys:String>
-    <sys:String x:Key="ListItem1">Элемент 1</sys:String>
-    <sys:String x:Key="ListItem2">Элемент 2</sys:String>
-    <sys:String x:Key="RichTextBoxText">RichTextBox поддерживает форматированный текст.</sys:String>
-
+    <!-- Контейнеры компоновки -->
     <sys:String x:Key="StackPanelVertical">StackPanel (Вертикальный)</sys:String>
     <sys:String x:Key="StackPanelHorizontal">StackPanel (Горизонтальный)</sys:String>
     <sys:String x:Key="WrapPanel">WrapPanel (Перенос элементов)</sys:String>
@@ -62,6 +82,7 @@
     <sys:String x:Key="Grid">Grid (Табличная структура)</sys:String>
     <sys:String x:Key="Canvas">Canvas (Абсолютное позиционирование)</sys:String>
 
+    <!-- Таблицы и команды -->
     <sys:String x:Key="SourceTable">Исходная таблица (Source)</sys:String>
     <sys:String x:Key="TargetTable">Целевая таблица (Target)</sys:String>
     <sys:String x:Key="Add">Добавить</sys:String>
@@ -72,35 +93,22 @@
     <sys:String x:Key="DescriptionColumn">Описание</sys:String>
     <sys:String x:Key="StatusColumn">Статус</sys:String>
 
-    <sys:String x:Key="BindingDemo">Демонстрация типов привязки (Mode) и режимов обновления (UpdateSourceTrigger)</sys:String>
-    <sys:String x:Key="BindingModeSection">Типы привязки (Mode)</sys:String>
-    <sys:String x:Key="UpdateSection">Режимы обновления (UpdateSourceTrigger)</sys:String>
-    <sys:String x:Key="ModeTwoWay">TwoWay (двусторонняя)</sys:String>
-    <sys:String x:Key="ModeOneWay">OneWay (только из ViewModel)</sys:String>
-    <sys:String x:Key="ModeOneTime">OneTime (только при загрузке)</sys:String>
-    <sys:String x:Key="ModeOneWayToSource">OneWayToSource (только в ViewModel)</sys:String>
-    <sys:String x:Key="TriggerPropertyChanged">PropertyChanged (при каждом символе)</sys:String>
-    <sys:String x:Key="TriggerLostFocus">LostFocus (при потере фокуса)</sys:String>
-    <sys:String x:Key="TriggerExplicit">Explicit (явно по кнопке)</sys:String>
+    <!-- Типы привязок -->
+    <sys:String x:Key="BindingDemo">Демонстрация режимов обновления источника (UpdateSourceTrigger)</sys:String>
+    <sys:String x:Key="PropertyChanged">1. PropertyChanged (Обновление при каждом символе)</sys:String>
+    <sys:String x:Key="LostFocus">2. LostFocus (Обновление при потере фокуса)</sys:String>
+    <sys:String x:Key="Explicit">3. Explicit (Явное обновление по кнопке)</sys:String>
     <sys:String x:Key="UpdateExplicit">Обновить явно</sys:String>
 
-    <!-- Меню -->
-    <sys:String x:Key="FileMenu">Файл</sys:String>
-    <sys:String x:Key="OpenItem">Открыть</sys:String>
-    <sys:String x:Key="SaveItem">Сохранить</sys:String>
-    <sys:String x:Key="ExitItem">Выход</sys:String>
-    <sys:String x:Key="EditMenu">Правка</sys:String>
-    <sys:String x:Key="HelpMenu">Справка</sys:String>
-    <sys:String x:Key="AboutItem">О программе</sys:String>
-    <sys:String x:Key="PropertiesItem">Свойства</sys:String>
-    <sys:String x:Key="Open">Открыть</sys:String>
-    <sys:String x:Key="Save">Сохранить</sys:String>
-    <sys:String x:Key="Exit">Выход</sys:String>
-    <sys:String x:Key="Undo">Отменить</sys:String>
-    <sys:String x:Key="Redo">Повторить</sys:String>
-    <sys:String x:Key="About">О программе</sys:String>
-    <sys:String x:Key="AccentPalette">Палитра акцентного цвета (10 оттенков)</sys:String>
-    <sys:String x:Key="SuccessPalette">Палитра цвета «Успех» (10 оттенков)</sys:String>
-    <sys:String x:Key="ErrorPalette">Палитра цвета «Ошибка» (10 оттенков)</sys:String>
-    <sys:String x:Key="InfoPalette">Палитра цвета «Информация» (10 оттенков)</sys:String>
+    <!-- Демо-данные для таблиц -->
+    <sys:String x:Key="DemoItem1Name">Элемент 1</sys:String>
+    <sys:String x:Key="DemoItem1Desc">Тестовое описание</sys:String>
+    <sys:String x:Key="DemoItem1Status">Активен</sys:String>
+    <sys:String x:Key="DemoItem2Name">Элемент 2</sys:String>
+    <sys:String x:Key="DemoItem2Desc">Еще одно описание</sys:String>
+    <sys:String x:Key="DemoItem2Status">Ожидает</sys:String>
+    <sys:String x:Key="DemoNewName">Новый элемент</sys:String>
+    <sys:String x:Key="DemoNewDesc">Описание</sys:String>
+    <sys:String x:Key="DemoNewStatus">Новый</sys:String>
+
 </ResourceDictionary>

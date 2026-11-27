@@ -41,11 +41,11 @@ namespace Lab_1.ViewModels
                     OnPropertyChanged(nameof(CurrentThemeText));
                     OnPropertyChanged(nameof(CurrentFontSizeText));
                     OnPropertyChanged(nameof(Translations));
+                    OnPropertyChanged(nameof(LanguageSuffix));
                 }
             }
         }
 
-        // Новое свойство: выбранный шрифт
         private string _selectedFontFamily = "Segoe UI";
         public string SelectedFontFamily
         {
@@ -53,7 +53,6 @@ namespace Lab_1.ViewModels
             set => SetProperty(ref _selectedFontFamily, value);
         }
 
-        // Размер шрифта — теперь он применяется к окну
         private double _fontSize = 14;
         public double FontSize
         {
@@ -67,9 +66,20 @@ namespace Lab_1.ViewModels
             }
         }
 
-        // Вычисляемое свойство для локализованного текста "Текущий размер: N"
         public string CurrentFontSizeText
             => string.Format(LanguageManager.Instance["CurrentFontSize"], FontSize);
+
+        public string CurrentThemeText
+        {
+            get
+            {
+                string themeKey = _selectedTheme == "Светлая тема" ? "LightTheme" : "DarkTheme";
+                string themeName = LanguageManager.Instance[themeKey];
+                return string.Format(LanguageManager.Instance["CurrentThemeFormat"], themeName);
+            }
+        }
+
+        public string LanguageSuffix => _selectedLanguage == "en" ? "En" : "Ru";
 
         #endregion
 
@@ -154,23 +164,36 @@ namespace Lab_1.ViewModels
 
         #endregion
 
-        public string CurrentThemeText => $"Текущая тема: {_selectedTheme}";
-
         public Dictionary<string, string> Translations => LanguageManager.Instance.Translations;
 
         public MainViewModel()
         {
             ThemeManager.ApplyTheme(_selectedTheme);
 
-            SourceItems.Add(new ItemModel { Name = "Элемент 1", Description = "Тестовое описание", Status = "Активен" });
-            SourceItems.Add(new ItemModel { Name = "Элемент 2", Description = "Еще одно описание", Status = "Ожидает" });
+            SourceItems.Add(new ItemModel
+            {
+                Name = LanguageManager.Instance["DemoItem1Name"],
+                Description = LanguageManager.Instance["DemoItem1Desc"],
+                Status = LanguageManager.Instance["DemoItem1Status"]
+            });
+            SourceItems.Add(new ItemModel
+            {
+                Name = LanguageManager.Instance["DemoItem2Name"],
+                Description = LanguageManager.Instance["DemoItem2Desc"],
+                Status = LanguageManager.Instance["DemoItem2Status"]
+            });
 
             SaveSnapshot();
 
             AddCommand = new RelayCommand(_ =>
             {
                 SaveSnapshot();
-                SourceItems.Add(new ItemModel { Name = "Новый элемент", Description = "Описание", Status = "Новый" });
+                SourceItems.Add(new ItemModel
+                {
+                    Name = LanguageManager.Instance["DemoNewName"],
+                    Description = LanguageManager.Instance["DemoNewDesc"],
+                    Status = LanguageManager.Instance["DemoNewStatus"]
+                });
                 CommandManager.InvalidateRequerySuggested();
             });
 

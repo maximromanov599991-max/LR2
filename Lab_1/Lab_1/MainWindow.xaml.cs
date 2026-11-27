@@ -12,21 +12,22 @@ namespace Lab_1
             InitializeComponent();
         }
 
-
+        /// <summary>
         /// Обработчик кнопки "Обновить явно" для демонстрации UpdateSourceTrigger=Explicit.
         /// Принудительно передаёт значение из TextBox в ViewModel через UpdateSource().
+        /// </summary>
         private void UpdateExplicit_Click(object sender, RoutedEventArgs e)
         {
-            // 1. Получаем BindingExpression для свойства Text у TextBox
+            // Получаем BindingExpression для свойства Text у TextBox
             BindingExpression bindingExpression = ExplicitTextBox.GetBindingExpression(TextBox.TextProperty);
 
-            // 2. Принудительно передаём значение из TextBox в источник привязки (ViewModel)
+            // Принудительно передаём значение из TextBox в источник привязки (ViewModel)
             bindingExpression.UpdateSource();
 
-            // 3. Получаем ViewModel из DataContext окна
+            // Получаем ViewModel из DataContext окна
             MainViewModel viewModel = DataContext as MainViewModel;
 
-            // 4. Показываем актуальное значение в MessageBox
+            // Показываем актуальное значение в MessageBox
             if (viewModel != null)
             {
                 MessageBox.Show(
