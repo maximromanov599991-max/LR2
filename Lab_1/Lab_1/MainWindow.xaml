@@ -2,8 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:Lab_1.ViewModels"
-        Title="{DynamicResource AppTitle}" 
-        Height="750" Width="1100"
+        Title="{DynamicResource AppTitle}" Height="750" Width="1100"
         WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
@@ -24,17 +23,59 @@
     </Window.CommandBindings>
 
     <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/WpfResources;component/AppStyles.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/WpfResources;component/LightTheme.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/WpfResources;component/RussianLanguage.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <XmlDataProvider x:Key="PrimaryColors">
+            <x:XData>
+                <Colors xmlns="">
+                    <Color Hex="#E3F2FD" RGB="227, 242, 253" Name="Основной 50"/>
+                    <Color Hex="#BBDEFB" RGB="187, 222, 251" Name="Основной 100"/>
+                    <Color Hex="#90CAF9" RGB="144, 202, 249" Name="Основной 200"/>
+                    <Color Hex="#64B5F6" RGB="100, 181, 246" Name="Основной 300"/>
+                    <Color Hex="#42A5F5" RGB="66, 165, 245" Name="Основной 400"/>
+                    <Color Hex="#2196F3" RGB="33, 150, 243" Name="Основной 500 (Базовый)"/>
+                    <Color Hex="#1E88E5" RGB="30, 136, 229" Name="Основной 600"/>
+                    <Color Hex="#1976D2" RGB="25, 118, 210" Name="Основной 700"/>
+                    <Color Hex="#1565C0" RGB="21, 101, 192" Name="Основной 800"/>
+                    <Color Hex="#0D47A1" RGB="13, 71, 161" Name="Основной 900"/>
+                </Colors>
+            </x:XData>
+        </XmlDataProvider>
+
+        <XmlDataProvider x:Key="TreeData">
+            <x:XData>
+                <Tree xmlns="">
+                    <Node Name="Элементы управления">
+                        <Node Name="Кнопки">
+                            <Node Name="Button"/>
+                            <Node Name="ToggleButton"/>
+                        </Node>
+                        <Node Name="Поля ввода">
+                            <Node Name="TextBox"/>
+                            <Node Name="PasswordBox"/>
+                        </Node>
+                    </Node>
+                    <Node Name="Контейнеры">
+                        <Node Name="StackPanel"/>
+                        <Node Name="Grid"/>
+                        <Node Name="Canvas"/>
+                    </Node>
+                </Tree>
+            </x:XData>
+        </XmlDataProvider>
+
+        <XmlDataProvider x:Key="DemoGridData">
+            <x:XData>
+                <Items xmlns="">
+                    <Item Name="Button" Description="Обычная кнопка" Status="Активна"/>
+                    <Item Name="TextBox" Description="Поле ввода текста" Status="Пустое"/>
+                    <Item Name="ComboBox" Description="Раскрывающийся список" Status="Выбрано"/>
+                    <Item Name="CheckBox" Description="Флажок" Status="Отмечен"/>
+                </Items>
+            </x:XData>
+        </XmlDataProvider>
     </Window.Resources>
 
     <DockPanel>
-        <!-- Главное меню -->
+        <!-- Главное меню (ЛР1 п.1.c.i) -->
         <Menu DockPanel.Dock="Top" Style="{DynamicResource AppMenuStyle}">
             <MenuItem Header="{DynamicResource FileMenu}">
                 <MenuItem Header="{DynamicResource OpenItem}"/>
@@ -51,7 +92,7 @@
             </MenuItem>
         </Menu>
 
-        <!-- Панель инструментов -->
+        <!-- Панель инструментов с встроенными командами (ЛР2 п.6) -->
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
                 <Button Content="{DynamicResource Add}" Command="ApplicationCommands.New" Style="{DynamicResource SuccessButtonStyle}"/>
@@ -64,7 +105,7 @@
 
         <TabControl Margin="10">
 
-            <!-- ВКЛАДКА 1: Основное -->
+            <!-- ВКЛАДКА 1: Основное (ЛР1 п.1.a) -->
             <TabItem Header="{DynamicResource TabMain}">
                 <ScrollViewer>
                     <StackPanel Margin="15">
@@ -108,7 +149,7 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ВКЛАДКА 2: Цветовая палитра -->
+            <!-- ВКЛАДКА 2: Цветовая палитра (ЛР1 п.1.b) -->
             <TabItem Header="{DynamicResource TabPalette}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
@@ -141,7 +182,7 @@
                         </GroupBox>
 
                         <GroupBox Header="{DynamicResource ColorPalette}" Style="{DynamicResource AppGroupBoxStyle}">
-                            <ItemsControl ItemsSource="{Binding ColorShades}">
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource PrimaryColors}, XPath=Colors/Color}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Grid Margin="2">
@@ -150,9 +191,9 @@
                                                 <ColumnDefinition Width="150"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Rectangle Fill="{Binding Hex}" Width="60" Height="30" Stroke="Gray" RadiusX="3" RadiusY="3"/>
-                                            <TextBlock Text="{Binding RGB}" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                            <TextBlock Text="{Binding Name}" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                            <Rectangle Fill="{Binding XPath=@Hex}" Width="60" Height="30" Stroke="Gray" RadiusX="3" RadiusY="3"/>
+                                            <TextBlock Text="{Binding XPath=@RGB}" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding XPath=@Name}" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -162,13 +203,16 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ВКЛАДКА 3: Элементы управления -->
+            <!-- ВКЛАДКА 3: Элементы управления (ЛР1 п.1.c) -->
             <TabItem Header="{DynamicResource TabControls}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
+                        <!-- Кнопки (ЛР1 п.1.c.i) -->
                         <Expander Header="{DynamicResource Buttons}" IsExpanded="True" Margin="0,5">
                             <StackPanel Orientation="Horizontal" Margin="10">
-                                <Button Content="{DynamicResource NormalButton}" Style="{DynamicResource PrimaryButtonStyle}" ToolTip="Всплывающая подсказка"/>
+                                <Button Content="{DynamicResource NormalButton}" Style="{DynamicResource PrimaryButtonStyle}" 
+                                        ToolTip="Всплывающая подсказка"/>
+                                <!-- Кнопка с пиктограммой -->
                                 <Button Style="{DynamicResource PrimaryButtonStyle}" ToolTip="Кнопка с иконкой">
                                     <StackPanel Orientation="Horizontal">
                                         <Path Data="M 0,0 L 10,10 L 20,0" Fill="White" Width="16" Height="16" Margin="0,0,5,0"/>
@@ -181,11 +225,13 @@
                             </StackPanel>
                         </Expander>
 
+                        <!-- Поля ввода и списки -->
                         <Expander Header="{DynamicResource InputFields}" IsExpanded="True" Margin="0,5">
                             <StackPanel Margin="10">
                                 <TextBox Text="{DynamicResource TextBoxPlaceholder}" Style="{DynamicResource AppInputStyle}"/>
                                 <PasswordBox Password="secret" Padding="6,4" Margin="0,0,0,10" 
                                              BorderBrush="{DynamicResource PrimaryBrush}" BorderThickness="1"/>
+                                <!-- RichTextBox (ЛР1 п.1.c.i) -->
                                 <RichTextBox Height="80" Margin="0,0,0,10" 
                                              BorderBrush="{DynamicResource PrimaryBrush}" BorderThickness="1">
                                     <FlowDocument>
@@ -205,6 +251,7 @@
                             </StackPanel>
                         </Expander>
 
+                        <!-- Текстовые элементы (ЛР1 п.1.c.i - заголовки 1-3) -->
                         <Expander Header="{DynamicResource TextElements}" IsExpanded="True" Margin="0,5">
                             <StackPanel Margin="10">
                                 <TextBlock Text="{DynamicResource Heading1}" FontSize="24" FontWeight="Bold" Margin="0,5"/>
@@ -217,26 +264,28 @@
                             </StackPanel>
                         </Expander>
 
+                        <!-- TreeView и DataGrid -->
                         <Expander Header="{DynamicResource TreeViewDataGrid}" IsExpanded="True" Margin="0,5">
                             <StackPanel Margin="10">
                                 <TreeView Height="120" BorderBrush="{DynamicResource PrimaryBrush}" 
                                           BorderThickness="1" Margin="0,0,0,10"
-                                          ItemsSource="{Binding TreeNodes}">
+                                          ItemsSource="{Binding Source={StaticResource TreeData}, XPath=Tree/Node}">
                                     <TreeView.ItemTemplate>
-                                        <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                                            <TextBlock Text="{Binding Name}"/>
+                                        <HierarchicalDataTemplate ItemsSource="{Binding XPath=Node}">
+                                            <TextBlock Text="{Binding XPath=@Name}"/>
                                         </HierarchicalDataTemplate>
                                     </TreeView.ItemTemplate>
                                 </TreeView>
 
                                 <DataGrid Height="120" AutoGenerateColumns="False" IsReadOnly="True"
-                                          ItemsSource="{Binding DemoGridItems}"
+                                          ItemsSource="{Binding Source={StaticResource DemoGridData}, XPath=Items/Item}"
                                           Style="{DynamicResource AppDataGridStyle}">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="{DynamicResource NameColumn}" Binding="{Binding Name}" Width="*"/>
-                                        <DataGridTextColumn Header="{DynamicResource DescriptionColumn}" Binding="{Binding Description}" Width="2*"/>
-                                        <DataGridTextColumn Header="{DynamicResource StatusColumn}" Binding="{Binding Status}" Width="*"/>
+                                        <DataGridTextColumn Header="{DynamicResource NameColumn}" Binding="{Binding XPath=@Name}" Width="*"/>
+                                        <DataGridTextColumn Header="{DynamicResource DescriptionColumn}" Binding="{Binding XPath=@Description}" Width="2*"/>
+                                        <DataGridTextColumn Header="{DynamicResource StatusColumn}" Binding="{Binding XPath=@Status}" Width="*"/>
                                     </DataGrid.Columns>
+                                    <!-- Контекстное меню (ЛР1 п.1.c.i) -->
                                     <DataGrid.ContextMenu>
                                         <ContextMenu>
                                             <MenuItem Header="{DynamicResource Copy}" Command="ApplicationCommands.Copy"/>
@@ -249,6 +298,7 @@
                             </StackPanel>
                         </Expander>
 
+                        <!-- ProgressBar -->
                         <Expander Header="{DynamicResource ProgressBar}" IsExpanded="False" Margin="0,5">
                             <StackPanel Margin="10">
                                 <ProgressBar Value="65" Height="25" Margin="0,5" Maximum="100"/>
@@ -259,7 +309,7 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ВКЛАДКА 4: Контейнеры компоновки -->
+            <!-- ВКЛАДКА 4: Контейнеры компоновки (ЛР1 п.1.d) -->
             <TabItem Header="{DynamicResource TabLayouts}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
@@ -326,7 +376,7 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ВКЛАДКА 5: Таблицы и Команды -->
+            <!-- ВКЛАДКА 5: Таблицы и Команды (ЛР2 п.5, п.6) -->
             <TabItem Header="{DynamicResource TabTables}">
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
@@ -376,13 +426,14 @@
                 </Grid>
             </TabItem>
 
-            <!-- ВКЛАДКА 6: Типы привязок -->
+            <!-- ВКЛАДКА 6: Типы привязок (ЛР2 п.8 - все Mode и UpdateSourceTrigger) -->
             <TabItem Header="{DynamicResource TabBindings}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
                         <TextBlock Text="{DynamicResource BindingDemo}"
                                    Style="{DynamicResource HeaderTextBlockStyle}"/>
 
+                        <!-- Типы привязки (Mode) -->
                         <GroupBox Header="{DynamicResource BindingModeSection}" Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
                                 <TextBlock Text="{DynamicResource ModeTwoWay}" FontWeight="Bold" Margin="0,0,0,5"/>
@@ -403,6 +454,7 @@
                             </StackPanel>
                         </GroupBox>
 
+                        <!-- Режимы обновления (UpdateSourceTrigger) -->
                         <GroupBox Header="{DynamicResource UpdateSection}" Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
                                 <TextBlock Text="{DynamicResource TriggerPropertyChanged}" FontWeight="Bold" Margin="0,0,0,5"/>

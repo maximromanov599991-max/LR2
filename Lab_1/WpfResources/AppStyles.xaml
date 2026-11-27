@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Именованные стили кнопок -->
+    <!-- Именованные стили кнопок -->
     <Style x:Key="BaseButtonStyle" TargetType="ButtonBase">
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="Padding" Value="12,6"/>
@@ -34,6 +35,7 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="BorderBrush" Value="{DynamicResource PrimaryBrush}"/>
     </Style>
+
     <!-- Стиль DataGrid -->
     <Style x:Key="AppDataGridStyle" TargetType="DataGrid">
         <Setter Property="GridLinesVisibility" Value="All"/>
