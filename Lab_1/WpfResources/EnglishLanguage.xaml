@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-
+    
+    <sys:String x:Key="CurrentFontSize">Current size: {0}</sys:String>
     <sys:String x:Key="AppTitle">Lab Work 2 - WPF MVVM</sys:String>
     <sys:String x:Key="TabMain">Main</sys:String>
     <sys:String x:Key="TabPalette">Color Palette</sys:String>
@@ -92,4 +93,10 @@
     <sys:String x:Key="HelpMenu">Help</sys:String>
     <sys:String x:Key="AboutItem">About</sys:String>
     <sys:String x:Key="PropertiesItem">Properties</sys:String>
+    <sys:String x:Key="Open">Open</sys:String>
+    <sys:String x:Key="Save">Save</sys:String>
+    <sys:String x:Key="Exit">Exit</sys:String>
+    <sys:String x:Key="Undo">Undo</sys:String>
+    <sys:String x:Key="Redo">Redo</sys:String>
+    <sys:String x:Key="About">About</sys:String>
 </ResourceDictionary>

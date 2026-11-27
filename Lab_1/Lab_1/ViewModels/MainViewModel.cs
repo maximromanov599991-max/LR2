@@ -1,14 +1,20 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
-using System.Windows.Media;
+using System.Windows.Input;
 using Lab_1.Commands;
 using Lab_1.Models;
 using Lab_1.Services;
+using Microsoft.Win32;
 
 namespace Lab_1.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        #region Свойства вкладки "Основное"
+
         private string _selectedTheme = "Светлая тема";
         public string SelectedTheme
         {
@@ -18,11 +24,12 @@ namespace Lab_1.ViewModels
                 if (SetProperty(ref _selectedTheme, value))
                 {
                     ThemeManager.ApplyTheme(value);
+                    OnPropertyChanged(nameof(CurrentThemeText));
                 }
             }
         }
 
-        private string _selectedLanguage = "Русский";
+        private string _selectedLanguage = "ru";
         public string SelectedLanguage
         {
             get => _selectedLanguage;
@@ -30,25 +37,23 @@ namespace Lab_1.ViewModels
             {
                 if (SetProperty(ref _selectedLanguage, value))
                 {
-                    LanguageManager.ApplyLanguage(value);
-                    UpdateSourceItemsTexts();
+                    LanguageManager.Instance.CurrentLanguage = value;
+                    OnPropertyChanged(nameof(CurrentThemeText));
+                    OnPropertyChanged(nameof(CurrentFontSizeText));
+                    OnPropertyChanged(nameof(Translations));
                 }
             }
         }
 
+        // Новое свойство: выбранный шрифт
         private string _selectedFontFamily = "Segoe UI";
         public string SelectedFontFamily
         {
             get => _selectedFontFamily;
-            set
-            {
-                if (SetProperty(ref _selectedFontFamily, value))
-                {
-                    ApplyFontToApplication(value);
-                }
-            }
+            set => SetProperty(ref _selectedFontFamily, value);
         }
 
+        // Размер шрифта — теперь он применяется к окну
         private double _fontSize = 14;
         public double FontSize
         {
@@ -57,39 +62,18 @@ namespace Lab_1.ViewModels
             {
                 if (SetProperty(ref _fontSize, value))
                 {
-                    ApplyFontSizeToApplication(value);
+                    OnPropertyChanged(nameof(CurrentFontSizeText));
                 }
             }
         }
 
-        // Свойства для демонстрации привязок
-        private string _bindingTwoWay;
-        public string BindingTwoWay
-        {
-            get => _bindingTwoWay;
-            set => SetProperty(ref _bindingTwoWay, value);
-        }
+        // Вычисляемое свойство для локализованного текста "Текущий размер: N"
+        public string CurrentFontSizeText
+            => string.Format(LanguageManager.Instance["CurrentFontSize"], FontSize);
 
-        private string _bindingOneWay = "Только для чтения из ViewModel";
-        public string BindingOneWay
-        {
-            get => _bindingOneWay;
-            set => SetProperty(ref _bindingOneWay, value);
-        }
+        #endregion
 
-        private string _bindingOneTime = "Значение при загрузке";
-        public string BindingOneTime
-        {
-            get => _bindingOneTime;
-            set => SetProperty(ref _bindingOneTime, value);
-        }
-
-        private string _bindingOneWayToSource;
-        public string BindingOneWayToSource
-        {
-            get => _bindingOneWayToSource;
-            set => SetProperty(ref _bindingOneWayToSource, value);
-        }
+        #region Свойства вкладки "Типы привязок"
 
         private string _bindingPropertyChanged;
         public string BindingPropertyChanged
@@ -112,12 +96,46 @@ namespace Lab_1.ViewModels
             set => SetProperty(ref _bindingExplicit, value);
         }
 
+        #endregion
+
+        #region Коллекции для таблиц
+
         public ObservableCollection<ItemModel> SourceItems { get; set; } = new ObservableCollection<ItemModel>();
         public ObservableCollection<ItemModel> TargetItems { get; set; } = new ObservableCollection<ItemModel>();
         public ObservableCollection<ItemModel> ClipboardItems { get; set; } = new ObservableCollection<ItemModel>();
 
-        public ItemModel SelectedSourceItem { get; set; }
-        public ItemModel SelectedTargetItem { get; set; }
+        private ItemModel _selectedSourceItem;
+        public ItemModel SelectedSourceItem
+        {
+            get => _selectedSourceItem;
+            set
+            {
+                if (SetProperty(ref _selectedSourceItem, value))
+                    CommandManager.InvalidateRequerySuggested();
+            }
+        }
+
+        private ItemModel _selectedTargetItem;
+        public ItemModel SelectedTargetItem
+        {
+            get => _selectedTargetItem;
+            set
+            {
+                if (SetProperty(ref _selectedTargetItem, value))
+                    CommandManager.InvalidateRequerySuggested();
+            }
+        }
+
+        #endregion
+
+        #region Стек Undo / Redo
+
+        private Stack<List<ItemModel>> _undoStack = new Stack<List<ItemModel>>();
+        private Stack<List<ItemModel>> _redoStack = new Stack<List<ItemModel>>();
+
+        #endregion
+
+        #region Команды
 
         public RelayCommand AddCommand { get; }
         public RelayCommand DeleteCommand { get; }
@@ -125,37 +143,46 @@ namespace Lab_1.ViewModels
         public RelayCommand PasteCommand { get; }
         public RelayCommand UpdateExplicitCommand { get; }
 
+        public RelayCommand OpenCommand { get; }
+        public RelayCommand SaveCommand { get; }
+        public RelayCommand ExitCommand { get; }
+
+        public RelayCommand UndoCommand { get; }
+        public RelayCommand RedoCommand { get; }
+
+        public RelayCommand AboutCommand { get; }
+
+        #endregion
+
+        public string CurrentThemeText => $"Текущая тема: {_selectedTheme}";
+
+        public Dictionary<string, string> Translations => LanguageManager.Instance.Translations;
+
         public MainViewModel()
         {
             ThemeManager.ApplyTheme(_selectedTheme);
-            LanguageManager.ApplyLanguage(_selectedLanguage);
-            ApplyFontToApplication(_selectedFontFamily);
-            ApplyFontSizeToApplication(_fontSize);
 
-            InitializeSourceItems();
+            SourceItems.Add(new ItemModel { Name = "Элемент 1", Description = "Тестовое описание", Status = "Активен" });
+            SourceItems.Add(new ItemModel { Name = "Элемент 2", Description = "Еще одно описание", Status = "Ожидает" });
+
+            SaveSnapshot();
 
             AddCommand = new RelayCommand(_ =>
             {
-                var newItem = new ItemModel();
-                if (_selectedLanguage == "English")
-                {
-                    newItem.Name = "New item";
-                    newItem.Description = "Description";
-                    newItem.Status = "New";
-                }
-                else
-                {
-                    newItem.Name = "Новый элемент";
-                    newItem.Description = "Описание";
-                    newItem.Status = "Новый";
-                }
-                SourceItems.Add(newItem);
+                SaveSnapshot();
+                SourceItems.Add(new ItemModel { Name = "Новый элемент", Description = "Описание", Status = "Новый" });
+                CommandManager.InvalidateRequerySuggested();
             });
 
             DeleteCommand = new RelayCommand(_ =>
             {
                 if (SelectedSourceItem != null)
+                {
+                    SaveSnapshot();
                     SourceItems.Remove(SelectedSourceItem);
+                    SelectedSourceItem = null;
+                    CommandManager.InvalidateRequerySuggested();
+                }
             }, _ => SelectedSourceItem != null);
 
             CopyCommand = new RelayCommand(_ =>
@@ -167,10 +194,12 @@ namespace Lab_1.ViewModels
                     Description = SelectedSourceItem.Description,
                     Status = SelectedSourceItem.Status
                 });
+                CommandManager.InvalidateRequerySuggested();
             }, _ => SelectedSourceItem != null);
 
             PasteCommand = new RelayCommand(_ =>
             {
+                SaveSnapshot();
                 foreach (var item in ClipboardItems)
                 {
                     TargetItems.Add(new ItemModel
@@ -181,72 +210,133 @@ namespace Lab_1.ViewModels
                     });
                 }
                 ClipboardItems.Clear();
-            });
+                CommandManager.InvalidateRequerySuggested();
+            }, _ => ClipboardItems.Count > 0);
 
             UpdateExplicitCommand = new RelayCommand(_ =>
             {
                 OnPropertyChanged(nameof(BindingExplicit));
                 MessageBox.Show($"Значение обновлено явно: {BindingExplicit}");
             });
+
+            OpenCommand = new RelayCommand(_ => ExecuteOpen());
+            SaveCommand = new RelayCommand(_ => ExecuteSave());
+            ExitCommand = new RelayCommand(_ => Application.Current.Shutdown());
+
+            UndoCommand = new RelayCommand(_ => ExecuteUndo(), _ => _undoStack.Count > 1);
+            RedoCommand = new RelayCommand(_ => ExecuteRedo(), _ => _redoStack.Count > 0);
+
+            AboutCommand = new RelayCommand(_ =>
+            {
+                MessageBox.Show(
+                    "Лабораторная работа 2\n" +
+                    "Тема: WPF, MVVM, привязки и команды\n" +
+                    "Проект: Lab_1",
+                    "О программе",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            });
         }
 
-        private void InitializeSourceItems()
-        {
-            SourceItems.Clear();
-            SourceItems.Add(new ItemModel { Name = "Элемент 1", Description = "Тестовое описание", Status = "Активен" });
-            SourceItems.Add(new ItemModel { Name = "Элемент 2", Description = "Еще одно описание", Status = "Ожидает" });
-        }
+        #region Вспомогательные private-методы
 
-        private void UpdateSourceItemsTexts()
+        private void SaveSnapshot()
         {
+            var snapshot = new List<ItemModel>();
             foreach (var item in SourceItems)
-            {
-                if (_selectedLanguage == "English")
-                {
-                    if (item.Name == "Элемент 1") item.Name = "Item 1";
-                    else if (item.Name == "Элемент 2") item.Name = "Item 2";
-                    else if (item.Name == "Новый элемент") item.Name = "New item";
-
-                    if (item.Description == "Тестовое описание") item.Description = "Test description";
-                    else if (item.Description == "Еще одно описание") item.Description = "Another description";
-                    else if (item.Description == "Описание") item.Description = "Description";
-
-                    if (item.Status == "Активен") item.Status = "Active";
-                    else if (item.Status == "Ожидает") item.Status = "Pending";
-                    else if (item.Status == "Новый") item.Status = "New";
-                }
-                else
-                {
-                    if (item.Name == "Item 1") item.Name = "Элемент 1";
-                    else if (item.Name == "Item 2") item.Name = "Элемент 2";
-                    else if (item.Name == "New item") item.Name = "Новый элемент";
-
-                    if (item.Description == "Test description") item.Description = "Тестовое описание";
-                    else if (item.Description == "Another description") item.Description = "Еще одно описание";
-                    else if (item.Description == "Description") item.Description = "Описание";
-
-                    if (item.Status == "Active") item.Status = "Активен";
-                    else if (item.Status == "Pending") item.Status = "Ожидает";
-                    else if (item.Status == "New") item.Status = "Новый";
-                }
-            }
-            OnPropertyChanged(nameof(SourceItems));
+                snapshot.Add(new ItemModel { Name = item.Name, Description = item.Description, Status = item.Status });
+            _undoStack.Push(snapshot);
+            _redoStack.Clear();
+            CommandManager.InvalidateRequerySuggested();
         }
 
-        private void ApplyFontToApplication(string fontFamilyName)
+        private void ExecuteUndo()
         {
-            if (Application.Current.MainWindow != null)
+            if (_undoStack.Count <= 1) return;
+            var current = new List<ItemModel>();
+            foreach (var item in SourceItems)
+                current.Add(new ItemModel { Name = item.Name, Description = item.Description, Status = item.Status });
+            _redoStack.Push(current);
+            _undoStack.Pop();
+            var previous = _undoStack.Peek();
+            SourceItems.Clear();
+            foreach (var item in previous)
+                SourceItems.Add(new ItemModel { Name = item.Name, Description = item.Description, Status = item.Status });
+            CommandManager.InvalidateRequerySuggested();
+        }
+
+        private void ExecuteRedo()
+        {
+            if (_redoStack.Count == 0) return;
+            var next = _redoStack.Pop();
+            _undoStack.Push(next);
+            SourceItems.Clear();
+            foreach (var item in next)
+                SourceItems.Add(new ItemModel { Name = item.Name, Description = item.Description, Status = item.Status });
+            CommandManager.InvalidateRequerySuggested();
+        }
+
+        private void ExecuteOpen()
+        {
+            var dialog = new OpenFileDialog
             {
-                Application.Current.MainWindow.FontFamily = new FontFamily(fontFamilyName);
+                Filter = "CSV файлы (*.csv)|*.csv|Все файлы (*.*)|*.*",
+                Title = "Открыть файл данных"
+            };
+            if (dialog.ShowDialog() == true)
+            {
+                try
+                {
+                    SaveSnapshot();
+                    SourceItems.Clear();
+                    foreach (var line in File.ReadAllLines(dialog.FileName))
+                    {
+                        if (string.IsNullOrWhiteSpace(line)) continue;
+                        var parts = line.Split(';');
+                        if (parts.Length >= 3)
+                            SourceItems.Add(new ItemModel
+                            {
+                                Name = parts[0].Trim(),
+                                Description = parts[1].Trim(),
+                                Status = parts[2].Trim()
+                            });
+                    }
+                    CommandManager.InvalidateRequerySuggested();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка чтения файла: " + ex.Message, "Ошибка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
-        private void ApplyFontSizeToApplication(double fontSize)
+        private void ExecuteSave()
         {
-            if (Application.Current.MainWindow != null)
+            var dialog = new SaveFileDialog
             {
-                Application.Current.MainWindow.FontSize = fontSize;
+                Filter = "CSV файлы (*.csv)|*.csv",
+                Title = "Сохранить данные",
+                FileName = "data.csv"
+            };
+            if (dialog.ShowDialog() == true)
+            {
+                try
+                {
+                    using (var writer = new StreamWriter(dialog.FileName))
+                        foreach (var item in SourceItems)
+                            writer.WriteLine($"{item.Name};{item.Description};{item.Status}");
+                    MessageBox.Show("Данные сохранены успешно.", "Сохранение",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка записи файла: " + ex.Message, "Ошибка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
+
+        #endregion
     }
 }

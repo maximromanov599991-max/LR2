@@ -2,25 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:Lab_1.ViewModels"
-        Title="{DynamicResource AppTitle}" Height="750" Width="1100"
-        WindowStartupLocation="CenterScreen">
+        Title="{Binding Translations[AppTitle]}" Height="750" Width="1100"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="{Binding SelectedFontFamily}"
+        FontSize="{Binding FontSize}">
 
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
-
-    <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.Copy"
-                        Executed="Copy_Executed"
-                        CanExecute="Copy_CanExecute"/>
-        <CommandBinding Command="ApplicationCommands.Paste"
-                        Executed="Paste_Executed"/>
-        <CommandBinding Command="ApplicationCommands.New"
-                        Executed="New_Executed"/>
-        <CommandBinding Command="ApplicationCommands.Delete"
-                        Executed="Delete_Executed"
-                        CanExecute="Delete_CanExecute"/>
-    </Window.CommandBindings>
 
     <Window.Resources>
         <XmlDataProvider x:Key="PrimaryColors">
@@ -75,60 +64,70 @@
     </Window.Resources>
 
     <DockPanel>
-        <!-- Главное меню (ЛР1 п.1.c.i) -->
-        <Menu DockPanel.Dock="Top" Style="{DynamicResource AppMenuStyle}">
-            <MenuItem Header="{DynamicResource FileMenu}">
-                <MenuItem Header="{DynamicResource OpenItem}"/>
-                <MenuItem Header="{DynamicResource SaveItem}"/>
+
+        <!-- ГЛАВНОЕ МЕНЮ (Файл / Правка / Справка) -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{Binding Translations[FileMenu]}">
+                <MenuItem Header="{Binding Translations[Open]}" 
+                  Command="{Binding OpenCommand}" 
+                  InputGestureText="Ctrl+O"/>
+                <MenuItem Header="{Binding Translations[Save]}" 
+                  Command="{Binding SaveCommand}" 
+                  InputGestureText="Ctrl+S"/>
                 <Separator/>
-                <MenuItem Header="{DynamicResource ExitItem}"/>
+                <MenuItem Header="{Binding Translations[Exit]}" 
+                  Command="{Binding ExitCommand}"/>
             </MenuItem>
-            <MenuItem Header="{DynamicResource EditMenu}">
-                <MenuItem Header="{DynamicResource Copy}" Command="ApplicationCommands.Copy"/>
-                <MenuItem Header="{DynamicResource Paste}" Command="ApplicationCommands.Paste"/>
+            <MenuItem Header="{Binding Translations[EditMenu]}">
+                <MenuItem Header="{Binding Translations[Undo]}" 
+                  Command="{Binding UndoCommand}" 
+                  InputGestureText="Ctrl+Z"/>
+                <MenuItem Header="{Binding Translations[Redo]}" 
+                  Command="{Binding RedoCommand}" 
+                  InputGestureText="Ctrl+Y"/>
             </MenuItem>
-            <MenuItem Header="{DynamicResource HelpMenu}">
-                <MenuItem Header="{DynamicResource AboutItem}"/>
+            <MenuItem Header="{Binding Translations[HelpMenu]}">
+                <MenuItem Header="{Binding Translations[About]}" 
+                  Command="{Binding AboutCommand}"/>
             </MenuItem>
         </Menu>
-
-        <!-- Панель инструментов с встроенными командами (ЛР2 п.6) -->
+        <!-- Панель инструментов -->
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button Content="{DynamicResource Add}" Command="ApplicationCommands.New" Style="{DynamicResource SuccessButtonStyle}"/>
-                <Button Content="{DynamicResource Delete}" Command="ApplicationCommands.Delete" Style="{DynamicResource DangerButtonStyle}"/>
-                <Separator/>
-                <Button Content="{DynamicResource Copy}" Command="ApplicationCommands.Copy" Style="{DynamicResource ToolBarButtonStyle}"/>
-                <Button Content="{DynamicResource Paste}" Command="ApplicationCommands.Paste" Style="{DynamicResource ToolBarButtonStyle}"/>
+                <Button Content="{Binding Translations[Copy]}" Command="{Binding CopyCommand}" Style="{DynamicResource ToolBarButtonStyle}"/>
+                <Button Content="{Binding Translations[Paste]}" Command="{Binding PasteCommand}" Style="{DynamicResource ToolBarButtonStyle}"/>
             </ToolBar>
         </ToolBarTray>
 
         <TabControl Margin="10">
 
-            <!-- ВКЛАДКА 1: Основное (ЛР1 п.1.a) -->
-            <TabItem Header="{DynamicResource TabMain}">
+            <!-- ВКЛАДКА 1: Основное -->
+            <TabItem Header="{Binding Translations[TabMain]}">
                 <ScrollViewer>
                     <StackPanel Margin="15">
-                        <GroupBox Header="{DynamicResource PersonalizationSettings}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[PersonalizationSettings]}" Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
-                                <TextBlock Text="{DynamicResource ThemeLabel}" Style="{DynamicResource LabelStyle}"/>
+                                <TextBlock Text="{Binding Translations[ThemeLabel]}" Style="{DynamicResource LabelStyle}"/>
                                 <ComboBox Text="{Binding SelectedTheme, Mode=TwoWay}" Style="{DynamicResource AppInputStyle}">
-                                    <ComboBoxItem Content="{DynamicResource LightTheme}"/>
-                                    <ComboBoxItem Content="{DynamicResource DarkTheme}"/>
+                                    <ComboBoxItem Content="{Binding Translations[LightTheme]}"/>
+                                    <ComboBoxItem Content="{Binding Translations[DarkTheme]}"/>
                                 </ComboBox>
 
-                                <TextBlock Text="{DynamicResource LanguageLabel}" Style="{DynamicResource LabelStyle}"/>
+                                <TextBlock Text="{Binding Translations[LanguageLabel]}" Style="{DynamicResource LabelStyle}"/>
                                 <ComboBox Text="{Binding SelectedLanguage, Mode=TwoWay}" Style="{DynamicResource AppInputStyle}">
-                                    <ComboBoxItem Content="{DynamicResource Russian}"/>
-                                    <ComboBoxItem Content="{DynamicResource English}"/>
+                                    <ComboBoxItem Content="{Binding Translations[Russian]}"/>
+                                    <ComboBoxItem Content="{Binding Translations[English]}"/>
                                 </ComboBox>
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{DynamicResource FontSettings}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[FontSettings]}" Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
-                                <TextBlock Text="{DynamicResource FontLabel}" Style="{DynamicResource LabelStyle}"/>
-                                <ComboBox Text="{Binding SelectedFontFamily, Mode=TwoWay}" Style="{DynamicResource AppInputStyle}">
+                                <TextBlock Text="{Binding Translations[FontLabel]}" Style="{DynamicResource LabelStyle}"/>
+                                <!-- Привязка шрифта через SelectedValue + SelectedValuePath -->
+                                <ComboBox SelectedValue="{Binding SelectedFontFamily, Mode=TwoWay}"
+                              SelectedValuePath="Content"
+                              Style="{DynamicResource AppInputStyle}">
                                     <ComboBoxItem Content="Segoe UI"/>
                                     <ComboBoxItem Content="Arial"/>
                                     <ComboBoxItem Content="Times New Roman"/>
@@ -136,52 +135,50 @@
                                     <ComboBoxItem Content="Verdana"/>
                                 </ComboBox>
 
-                                <TextBlock Text="{DynamicResource FontSizeLabel}" Style="{DynamicResource LabelStyle}"/>
+                                <TextBlock Text="{Binding Translations[FontSizeLabel]}" Style="{DynamicResource LabelStyle}"/>
                                 <Slider Minimum="10" Maximum="24" Value="{Binding FontSize, Mode=TwoWay}"
-                                        TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,0,0,10"/>
-                                <TextBlock HorizontalAlignment="Center" FontWeight="Bold">
-                                    <Run Text="{DynamicResource CurrentFontSizeLabel}"/>
-                                    <Run Text="{Binding FontSize}"/>
-                                </TextBlock>
+                            TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,0,0,10"/>
+                                <!-- Локализованный текст через вычисляемое свойство -->
+                                <TextBlock Text="{Binding CurrentFontSizeText}"
+                               HorizontalAlignment="Center" FontWeight="Bold"/>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ВКЛАДКА 2: Цветовая палитра (ЛР1 п.1.b) -->
-            <TabItem Header="{DynamicResource TabPalette}">
+            <!-- ВКЛАДКА 2: Цветовая палитра -->
+            <TabItem Header="{Binding Translations[TabPalette]}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
-                        <TextBlock Text="{Binding SelectedTheme, StringFormat='Текущая тема: {0}'}"
-                                   Style="{DynamicResource HeaderTextBlockStyle}"/>
+                        <TextBlock Text="{Binding CurrentThemeText}" Style="{DynamicResource HeaderTextBlockStyle}"/>
 
-                        <GroupBox Header="{DynamicResource MainColors}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[MainColors]}" Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                                 <StackPanel Margin="10" HorizontalAlignment="Center">
                                     <Rectangle Width="60" Height="60" Fill="{DynamicResource PrimaryBrush}" RadiusX="5" RadiusY="5"/>
-                                    <TextBlock Text="{DynamicResource Primary}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                    <TextBlock Text="{Binding Translations[Primary]}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
                                 </StackPanel>
                                 <StackPanel Margin="10" HorizontalAlignment="Center">
                                     <Rectangle Width="60" Height="60" Fill="{DynamicResource AccentBrush}" RadiusX="5" RadiusY="5"/>
-                                    <TextBlock Text="{DynamicResource Accent}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                    <TextBlock Text="{Binding Translations[Accent]}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
                                 </StackPanel>
                                 <StackPanel Margin="10" HorizontalAlignment="Center">
                                     <Rectangle Width="60" Height="60" Fill="{DynamicResource SuccessBrush}" RadiusX="5" RadiusY="5"/>
-                                    <TextBlock Text="{DynamicResource Success}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                    <TextBlock Text="{Binding Translations[Success]}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
                                 </StackPanel>
                                 <StackPanel Margin="10" HorizontalAlignment="Center">
                                     <Rectangle Width="60" Height="60" Fill="{DynamicResource ErrorBrush}" RadiusX="5" RadiusY="5"/>
-                                    <TextBlock Text="{DynamicResource Error}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                    <TextBlock Text="{Binding Translations[Error]}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
                                 </StackPanel>
                                 <StackPanel Margin="10" HorizontalAlignment="Center">
                                     <Rectangle Width="60" Height="60" Fill="{DynamicResource InfoBrush}" RadiusX="5" RadiusY="5"/>
-                                    <TextBlock Text="{DynamicResource Info}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                    <TextBlock Text="{Binding Translations[Info]}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{DynamicResource ColorPalette}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[ColorPalette]}" Style="{DynamicResource AppGroupBoxStyle}">
                             <ItemsControl ItemsSource="{Binding Source={StaticResource PrimaryColors}, XPath=Colors/Color}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -203,72 +200,45 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ВКЛАДКА 3: Элементы управления (ЛР1 п.1.c) -->
-            <TabItem Header="{DynamicResource TabControls}">
+            <!-- ВКЛАДКА 3: Элементы управления -->
+            <TabItem Header="{Binding Translations[TabControls]}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
-                        <!-- Кнопки (ЛР1 п.1.c.i) -->
-                        <Expander Header="{DynamicResource Buttons}" IsExpanded="True" Margin="0,5">
+                        <Expander Header="{Binding Translations[Buttons]}" IsExpanded="True" Margin="0,5">
                             <StackPanel Orientation="Horizontal" Margin="10">
-                                <Button Content="{DynamicResource NormalButton}" Style="{DynamicResource PrimaryButtonStyle}" 
-                                        ToolTip="Всплывающая подсказка"/>
-                                <!-- Кнопка с пиктограммой -->
-                                <Button Style="{DynamicResource PrimaryButtonStyle}" ToolTip="Кнопка с иконкой">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Path Data="M 0,0 L 10,10 L 20,0" Fill="White" Width="16" Height="16" Margin="0,0,5,0"/>
-                                        <TextBlock Text="{DynamicResource IconButton}"/>
-                                    </StackPanel>
-                                </Button>
-                                <Button Content="{DynamicResource SuccessButton}" Style="{DynamicResource SuccessButtonStyle}"/>
-                                <Button Content="{DynamicResource DeleteButton}" Style="{DynamicResource DangerButtonStyle}"/>
-                                <ToggleButton Content="{DynamicResource ToggleButton}" Style="{DynamicResource PrimaryButtonStyle}"/>
+                                <Button Content="{Binding Translations[NormalButton]}" Style="{DynamicResource PrimaryButtonStyle}" ToolTip="Всплывающая подсказка"/>
+                                <Button Content="{Binding Translations[SuccessButton]}" Style="{DynamicResource SuccessButtonStyle}"/>
+                                <Button Content="{Binding Translations[DeleteButton]}" Style="{DynamicResource DangerButtonStyle}"/>
+                                <ToggleButton Content="{Binding Translations[ToggleButton]}" Style="{DynamicResource PrimaryButtonStyle}"/>
                             </StackPanel>
                         </Expander>
 
-                        <!-- Поля ввода и списки -->
-                        <Expander Header="{DynamicResource InputFields}" IsExpanded="True" Margin="0,5">
+                        <Expander Header="{Binding Translations[InputFields]}" IsExpanded="True" Margin="0,5">
                             <StackPanel Margin="10">
-                                <TextBox Text="{DynamicResource TextBoxPlaceholder}" Style="{DynamicResource AppInputStyle}"/>
-                                <PasswordBox Password="secret" Padding="6,4" Margin="0,0,0,10" 
-                                             BorderBrush="{DynamicResource PrimaryBrush}" BorderThickness="1"/>
-                                <!-- RichTextBox (ЛР1 п.1.c.i) -->
-                                <RichTextBox Height="80" Margin="0,0,0,10" 
-                                             BorderBrush="{DynamicResource PrimaryBrush}" BorderThickness="1">
-                                    <FlowDocument>
-                                        <Paragraph>
-                                            <Run Text="{DynamicResource RichTextBoxText}"/>
-                                        </Paragraph>
-                                    </FlowDocument>
-                                </RichTextBox>
+                                <TextBox Text="TextBox: введите текст" Style="{DynamicResource AppInputStyle}"/>
+                                <PasswordBox Password="secret" Padding="6,4" Margin="0,0,0,10" BorderBrush="#CCCCCC" BorderThickness="1"/>
                                 <StackPanel Orientation="Horizontal">
-                                    <ComboBox Text="{DynamicResource ComboBoxPlaceholder}" IsEditable="True" 
-                                              Width="200" Margin="0,0,10,0" Style="{DynamicResource AppInputStyle}"/>
+                                    <ComboBox Text="ComboBox" IsEditable="True" Width="200" Margin="0,0,10,0" Style="{DynamicResource AppInputStyle}"/>
                                     <ListBox Width="200" Height="60">
-                                        <ListBoxItem Content="{DynamicResource ListItem1}"/>
-                                        <ListBoxItem Content="{DynamicResource ListItem2}"/>
+                                        <ListBoxItem Content="Элемент 1"/>
+                                        <ListBoxItem Content="Элемент 2"/>
                                     </ListBox>
                                 </StackPanel>
                             </StackPanel>
                         </Expander>
 
-                        <!-- Текстовые элементы (ЛР1 п.1.c.i - заголовки 1-3) -->
-                        <Expander Header="{DynamicResource TextElements}" IsExpanded="True" Margin="0,5">
+                        <Expander Header="{Binding Translations[TextElements]}" IsExpanded="True" Margin="0,5">
                             <StackPanel Margin="10">
-                                <TextBlock Text="{DynamicResource Heading1}" FontSize="24" FontWeight="Bold" Margin="0,5"/>
-                                <TextBlock Text="{DynamicResource Heading2}" FontSize="20" FontWeight="SemiBold" Margin="0,5"/>
-                                <TextBlock Text="{DynamicResource Heading3}" FontSize="16" FontWeight="SemiBold" Margin="0,5"/>
-                                <TextBlock Text="{DynamicResource NormalText}" Margin="0,5"/>
-                                <Label Content="{DynamicResource LabelCaption}" 
-                                       BorderBrush="{DynamicResource PrimaryBrush}" BorderThickness="1" 
-                                       Padding="5" Margin="0,5"/>
+                                <TextBlock Text="Заголовок уровня 1" FontSize="24" FontWeight="Bold" Margin="0,5"/>
+                                <TextBlock Text="Заголовок уровня 2" FontSize="20" FontWeight="SemiBold" Margin="0,5"/>
+                                <TextBlock Text="Обычный текст в TextBlock." Margin="0,5"/>
+                                <Label Content="Подпись в Label" BorderBrush="Gray" BorderThickness="1" Padding="5" Margin="0,5"/>
                             </StackPanel>
                         </Expander>
 
-                        <!-- TreeView и DataGrid -->
-                        <Expander Header="{DynamicResource TreeViewDataGrid}" IsExpanded="True" Margin="0,5">
+                        <Expander Header="{Binding Translations[TreeViewDataGrid]}" IsExpanded="True" Margin="0,5">
                             <StackPanel Margin="10">
-                                <TreeView Height="120" BorderBrush="{DynamicResource PrimaryBrush}" 
-                                          BorderThickness="1" Margin="0,0,0,10"
+                                <TreeView Height="120" BorderBrush="Gray" BorderThickness="1" Margin="0,0,0,10"
                                           ItemsSource="{Binding Source={StaticResource TreeData}, XPath=Tree/Node}">
                                     <TreeView.ItemTemplate>
                                         <HierarchicalDataTemplate ItemsSource="{Binding XPath=Node}">
@@ -281,39 +251,29 @@
                                           ItemsSource="{Binding Source={StaticResource DemoGridData}, XPath=Items/Item}"
                                           Style="{DynamicResource AppDataGridStyle}">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="{DynamicResource NameColumn}" Binding="{Binding XPath=@Name}" Width="*"/>
-                                        <DataGridTextColumn Header="{DynamicResource DescriptionColumn}" Binding="{Binding XPath=@Description}" Width="2*"/>
-                                        <DataGridTextColumn Header="{DynamicResource StatusColumn}" Binding="{Binding XPath=@Status}" Width="*"/>
+                                        <DataGridTextColumn Header="Название" Binding="{Binding XPath=@Name}" Width="*"/>
+                                        <DataGridTextColumn Header="Описание" Binding="{Binding XPath=@Description}" Width="2*"/>
+                                        <DataGridTextColumn Header="Статус" Binding="{Binding XPath=@Status}" Width="*"/>
                                     </DataGrid.Columns>
-                                    <!-- Контекстное меню (ЛР1 п.1.c.i) -->
-                                    <DataGrid.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="{DynamicResource Copy}" Command="ApplicationCommands.Copy"/>
-                                            <MenuItem Header="{DynamicResource Paste}" Command="ApplicationCommands.Paste"/>
-                                            <Separator/>
-                                            <MenuItem Header="{DynamicResource PropertiesItem}"/>
-                                        </ContextMenu>
-                                    </DataGrid.ContextMenu>
                                 </DataGrid>
                             </StackPanel>
                         </Expander>
 
-                        <!-- ProgressBar -->
-                        <Expander Header="{DynamicResource ProgressBar}" IsExpanded="False" Margin="0,5">
+                        <Expander Header="{Binding Translations[ProgressBar]}" IsExpanded="False" Margin="0,5">
                             <StackPanel Margin="10">
                                 <ProgressBar Value="65" Height="25" Margin="0,5" Maximum="100"/>
-                                <TextBlock Text="{DynamicResource ProgressText}" HorizontalAlignment="Center" Margin="0,5"/>
+                                <TextBlock Text="{Binding Translations[ProgressText]}" HorizontalAlignment="Center" Margin="0,5"/>
                             </StackPanel>
                         </Expander>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ВКЛАДКА 4: Контейнеры компоновки (ЛР1 п.1.d) -->
-            <TabItem Header="{DynamicResource TabLayouts}">
+            <!-- ВКЛАДКА 4: Контейнеры компоновки -->
+            <TabItem Header="{Binding Translations[TabLayouts]}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
-                        <GroupBox Header="{DynamicResource StackPanelVertical}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[StackPanelVertical]}" Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10" Background="{DynamicResource SecondaryBackgroundBrush}">
                                 <Rectangle Fill="{DynamicResource ErrorBrush}" Width="60" Height="40" Margin="2"/>
                                 <Rectangle Fill="{DynamicResource SuccessBrush}" Width="60" Height="40" Margin="2"/>
@@ -321,7 +281,7 @@
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{DynamicResource StackPanelHorizontal}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[StackPanelHorizontal]}" Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Orientation="Horizontal" Margin="10" Background="{DynamicResource SecondaryBackgroundBrush}">
                                 <Rectangle Fill="{DynamicResource ErrorBrush}" Width="60" Height="40" Margin="2"/>
                                 <Rectangle Fill="{DynamicResource SuccessBrush}" Width="60" Height="40" Margin="2"/>
@@ -329,7 +289,7 @@
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{DynamicResource WrapPanel}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[WrapPanel]}" Style="{DynamicResource AppGroupBoxStyle}">
                             <WrapPanel Margin="10" Background="{DynamicResource SecondaryBackgroundBrush}">
                                 <Rectangle Fill="{DynamicResource ErrorBrush}" Width="80" Height="40" Margin="2"/>
                                 <Rectangle Fill="{DynamicResource SuccessBrush}" Width="80" Height="40" Margin="2"/>
@@ -339,7 +299,7 @@
                             </WrapPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{DynamicResource DockPanel}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[DockPanel]}" Style="{DynamicResource AppGroupBoxStyle}">
                             <DockPanel Margin="10" Background="{DynamicResource SecondaryBackgroundBrush}" Height="140">
                                 <Rectangle Fill="{DynamicResource ErrorBrush}" Width="60" DockPanel.Dock="Left" Margin="2"/>
                                 <Rectangle Fill="{DynamicResource SuccessBrush}" Height="40" DockPanel.Dock="Top" Margin="2"/>
@@ -348,7 +308,7 @@
                             </DockPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{DynamicResource Grid}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[Grid]}" Style="{DynamicResource AppGroupBoxStyle}">
                             <Grid Margin="10" Background="{DynamicResource SecondaryBackgroundBrush}" Height="140">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -365,7 +325,7 @@
                             </Grid>
                         </GroupBox>
 
-                        <GroupBox Header="{DynamicResource Canvas}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[Canvas]}" Style="{DynamicResource AppGroupBoxStyle}">
                             <Canvas Margin="10" Background="{DynamicResource SecondaryBackgroundBrush}" Height="140">
                                 <Rectangle Fill="{DynamicResource ErrorBrush}" Width="60" Height="40" Canvas.Left="20" Canvas.Top="20"/>
                                 <Rectangle Fill="{DynamicResource SuccessBrush}" Width="60" Height="40" Canvas.Left="100" Canvas.Top="50"/>
@@ -376,98 +336,72 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ВКЛАДКА 5: Таблицы и Команды (ЛР2 п.5, п.6) -->
-            <TabItem Header="{DynamicResource TabTables}">
+            <!-- ВКЛАДКА 5: Таблицы и Команды -->
+            <TabItem Header="{Binding Translations[TabTables]}">
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <GroupBox Header="{DynamicResource SourceTable}" Grid.Column="0" Style="{DynamicResource AppGroupBoxStyle}">
+                    <GroupBox Header="{Binding Translations[SourceTable]}" Grid.Column="0" Style="{DynamicResource AppGroupBoxStyle}">
                         <DockPanel>
                             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                                <Button Content="{DynamicResource Add}" Command="{Binding AddCommand}" Style="{DynamicResource SuccessButtonStyle}"/>
-                                <Button Content="{DynamicResource Delete}" Command="{Binding DeleteCommand}" Style="{DynamicResource DangerButtonStyle}"/>
+                                <Button Content="{Binding Translations[Add]}" Command="{Binding AddCommand}" Style="{DynamicResource SuccessButtonStyle}"/>
+                                <Button Content="{Binding Translations[Delete]}" Command="{Binding DeleteCommand}" Style="{DynamicResource DangerButtonStyle}"/>
                             </StackPanel>
                             <DataGrid ItemsSource="{Binding SourceItems}"
-                                      SelectedItem="{Binding SelectedSourceItem}"
+                                      SelectedItem="{Binding SelectedSourceItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Style="{DynamicResource AppDataGridStyle}"
                                       AutoGenerateColumns="False" IsReadOnly="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="{DynamicResource NameColumn}" Binding="{Binding Name}" Width="*"/>
-                                    <DataGridTextColumn Header="{DynamicResource DescriptionColumn}" Binding="{Binding Description}" Width="2*"/>
-                                    <DataGridTextColumn Header="{DynamicResource StatusColumn}" Binding="{Binding Status}" Width="*"/>
+                                    <DataGridTextColumn Header="{Binding Translations[NameColumn]}" Binding="{Binding Name}" Width="*"/>
+                                    <DataGridTextColumn Header="{Binding Translations[DescriptionColumn]}" Binding="{Binding Description}" Width="2*"/>
+                                    <DataGridTextColumn Header="{Binding Translations[StatusColumn]}" Binding="{Binding Status}" Width="*"/>
                                 </DataGrid.Columns>
-                                <DataGrid.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Header="{DynamicResource Copy}" Command="ApplicationCommands.Copy"/>
-                                        <MenuItem Header="{DynamicResource Paste}" Command="ApplicationCommands.Paste"/>
-                                        <Separator/>
-                                        <MenuItem Header="{DynamicResource Delete}" Command="ApplicationCommands.Delete"/>
-                                    </ContextMenu>
-                                </DataGrid.ContextMenu>
                             </DataGrid>
                         </DockPanel>
                     </GroupBox>
 
-                    <GroupBox Header="{DynamicResource TargetTable}" Grid.Column="1" Style="{DynamicResource AppGroupBoxStyle}">
+                    <GroupBox Header="{Binding Translations[TargetTable]}" Grid.Column="1" Style="{DynamicResource AppGroupBoxStyle}">
                         <DataGrid ItemsSource="{Binding TargetItems}"
-                                  SelectedItem="{Binding SelectedTargetItem}"
+                                  SelectedItem="{Binding SelectedTargetItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                   Style="{DynamicResource AppDataGridStyle}"
                                   AutoGenerateColumns="False" IsReadOnly="True">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="{DynamicResource NameColumn}" Binding="{Binding Name}" Width="*"/>
-                                <DataGridTextColumn Header="{DynamicResource DescriptionColumn}" Binding="{Binding Description}" Width="2*"/>
-                                <DataGridTextColumn Header="{DynamicResource StatusColumn}" Binding="{Binding Status}" Width="*"/>
+                                <DataGridTextColumn Header="{Binding Translations[NameColumn]}" Binding="{Binding Name}" Width="*"/>
+                                <DataGridTextColumn Header="{Binding Translations[DescriptionColumn]}" Binding="{Binding Description}" Width="2*"/>
+                                <DataGridTextColumn Header="{Binding Translations[StatusColumn]}" Binding="{Binding Status}" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </GroupBox>
                 </Grid>
             </TabItem>
 
-            <!-- ВКЛАДКА 6: Типы привязок (ЛР2 п.8 - все Mode и UpdateSourceTrigger) -->
-            <TabItem Header="{DynamicResource TabBindings}">
+            <!-- ВКЛАДКА 6: Типы привязок -->
+            <TabItem Header="{Binding Translations[TabBindings]}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
-                        <TextBlock Text="{DynamicResource BindingDemo}"
-                                   Style="{DynamicResource HeaderTextBlockStyle}"/>
+                        <TextBlock Text="{Binding Translations[BindingDemo]}" Style="{DynamicResource HeaderTextBlockStyle}"/>
 
-                        <!-- Типы привязки (Mode) -->
-                        <GroupBox Header="{DynamicResource BindingModeSection}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[PropertyChanged]}" Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
-                                <TextBlock Text="{DynamicResource ModeTwoWay}" FontWeight="Bold" Margin="0,0,0,5"/>
-                                <TextBox Text="{Binding BindingTwoWay, Mode=TwoWay}" Style="{DynamicResource AppInputStyle}"/>
-                                <TextBlock Text="{Binding BindingTwoWay}" FontStyle="Italic" Foreground="Gray" Margin="0,0,0,10"/>
-
-                                <TextBlock Text="{DynamicResource ModeOneWay}" FontWeight="Bold" Margin="0,0,0,5"/>
-                                <TextBox Text="{Binding BindingOneWay, Mode=OneWay}" Style="{DynamicResource AppInputStyle}"/>
-                                <TextBlock Text="Изменение здесь не влияет на ViewModel" FontStyle="Italic" Foreground="Gray" Margin="0,0,0,10"/>
-
-                                <TextBlock Text="{DynamicResource ModeOneTime}" FontWeight="Bold" Margin="0,0,0,5"/>
-                                <TextBox Text="{Binding BindingOneTime, Mode=OneTime}" Style="{DynamicResource AppInputStyle}"/>
-                                <TextBlock Text="Значение фиксируется при загрузке" FontStyle="Italic" Foreground="Gray" Margin="0,0,0,10"/>
-
-                                <TextBlock Text="{DynamicResource ModeOneWayToSource}" FontWeight="Bold" Margin="0,0,0,5"/>
-                                <TextBox Text="{Binding BindingOneWayToSource, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource AppInputStyle}"/>
-                                <TextBlock Text="Текст ниже не обновляется, но ViewModel получает данные" FontStyle="Italic" Foreground="Gray"/>
+                                <TextBox Text="{Binding BindingPropertyChanged, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource AppInputStyle}"/>
+                                <TextBlock Text="{Binding BindingPropertyChanged}" FontStyle="Italic" Foreground="Gray"/>
                             </StackPanel>
                         </GroupBox>
 
-                        <!-- Режимы обновления (UpdateSourceTrigger) -->
-                        <GroupBox Header="{DynamicResource UpdateSection}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[LostFocus]}" Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
-                                <TextBlock Text="{DynamicResource TriggerPropertyChanged}" FontWeight="Bold" Margin="0,0,0,5"/>
-                                <TextBox Text="{Binding BindingPropertyChanged, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource AppInputStyle}"/>
-                                <TextBlock Text="{Binding BindingPropertyChanged}" FontStyle="Italic" Foreground="Gray" Margin="0,0,0,10"/>
-
-                                <TextBlock Text="{DynamicResource TriggerLostFocus}" FontWeight="Bold" Margin="0,0,0,5"/>
                                 <TextBox Text="{Binding BindingLostFocus, UpdateSourceTrigger=LostFocus}" Style="{DynamicResource AppInputStyle}"/>
-                                <TextBlock Text="{Binding BindingLostFocus}" FontStyle="Italic" Foreground="Gray" Margin="0,0,0,10"/>
+                                <TextBlock Text="{Binding BindingLostFocus}" FontStyle="Italic" Foreground="Gray"/>
+                            </StackPanel>
+                        </GroupBox>
 
-                                <TextBlock Text="{DynamicResource TriggerExplicit}" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <GroupBox Header="{Binding Translations[Explicit]}" Style="{DynamicResource AppGroupBoxStyle}">
+                            <StackPanel Margin="10">
                                 <TextBox Text="{Binding BindingExplicit, UpdateSourceTrigger=Explicit}" Style="{DynamicResource AppInputStyle}"/>
-                                <Button Content="{DynamicResource UpdateExplicit}" Command="{Binding UpdateExplicitCommand}"
+                                <Button Content="{Binding Translations[UpdateExplicit]}" Command="{Binding UpdateExplicitCommand}"
                                         Style="{DynamicResource PrimaryButtonStyle}" HorizontalAlignment="Left" Margin="0,10,0,0"/>
                             </StackPanel>
                         </GroupBox>
