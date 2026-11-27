@@ -5,9 +5,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!-- Начальная тема -->
+                <ResourceDictionary Source="pack://application:,,,/WpfResources;component/AppStyles.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WpfResources;component/LightTheme.xaml"/>
-                <!-- Начальный язык -->
                 <ResourceDictionary Source="pack://application:,,,/WpfResources;component/RussianLanguage.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

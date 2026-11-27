@@ -2,10 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <!-- Window title -->
     <sys:String x:Key="AppTitle">Lab Work 2 - WPF MVVM</sys:String>
-
-    <!-- Tabs -->
     <sys:String x:Key="TabMain">Main</sys:String>
     <sys:String x:Key="TabPalette">Color Palette</sys:String>
     <sys:String x:Key="TabControls">Controls</sys:String>
@@ -13,7 +10,6 @@
     <sys:String x:Key="TabTables">Tables and Commands</sys:String>
     <sys:String x:Key="TabBindings">Binding Types</sys:String>
 
-    <!-- Settings -->
     <sys:String x:Key="PersonalizationSettings">Personalization Settings</sys:String>
     <sys:String x:Key="ThemeLabel">Application Theme:</sys:String>
     <sys:String x:Key="LanguageLabel">Application Language:</sys:String>
@@ -22,13 +18,11 @@
     <sys:String x:Key="FontSizeLabel">Font Size:</sys:String>
     <sys:String x:Key="CurrentFontSizeLabel">Current size:</sys:String>
 
-    <!-- Themes and languages -->
     <sys:String x:Key="LightTheme">Light Theme</sys:String>
     <sys:String x:Key="DarkTheme">Dark Theme</sys:String>
     <sys:String x:Key="Russian">Русский</sys:String>
     <sys:String x:Key="English">English</sys:String>
 
-    <!-- Color palette -->
     <sys:String x:Key="MainColors">Main Colors</sys:String>
     <sys:String x:Key="Primary">Primary</sys:String>
     <sys:String x:Key="Accent">Accent</sys:String>
@@ -37,9 +31,9 @@
     <sys:String x:Key="Info">Info</sys:String>
     <sys:String x:Key="ColorPalette">Primary Color Palette (10 shades)</sys:String>
 
-    <!-- Controls -->
     <sys:String x:Key="Buttons">Buttons</sys:String>
     <sys:String x:Key="NormalButton">Normal</sys:String>
+    <sys:String x:Key="IconButton">With Icon</sys:String>
     <sys:String x:Key="SuccessButton">Success</sys:String>
     <sys:String x:Key="DeleteButton">Delete</sys:String>
     <sys:String x:Key="ToggleButton">Toggle</sys:String>
@@ -49,37 +43,17 @@
     <sys:String x:Key="ProgressBar">ProgressBar</sys:String>
     <sys:String x:Key="ProgressText">Progress: 65%</sys:String>
 
-    <!-- Text elements -->
     <sys:String x:Key="Heading1">Heading Level 1</sys:String>
     <sys:String x:Key="Heading2">Heading Level 2</sys:String>
+    <sys:String x:Key="Heading3">Heading Level 3</sys:String>
     <sys:String x:Key="NormalText">Normal text in TextBlock.</sys:String>
     <sys:String x:Key="LabelCaption">Label caption</sys:String>
     <sys:String x:Key="TextBoxPlaceholder">TextBox: enter text</sys:String>
     <sys:String x:Key="ComboBoxPlaceholder">ComboBox</sys:String>
     <sys:String x:Key="ListItem1">Item 1</sys:String>
     <sys:String x:Key="ListItem2">Item 2</sys:String>
+    <sys:String x:Key="RichTextBoxText">RichTextBox supports formatted text.</sys:String>
 
-    <!-- TreeView -->
-    <sys:String x:Key="TreeNodeControls">Controls</sys:String>
-    <sys:String x:Key="TreeNodeButtons">Buttons</sys:String>
-    <sys:String x:Key="TreeNodeInputs">Input Fields</sys:String>
-    <sys:String x:Key="TreeNodeContainers">Containers</sys:String>
-
-    <!-- Demo DataGrid data -->
-    <sys:String x:Key="DemoName1">Button</sys:String>
-    <sys:String x:Key="DemoDesc1">Normal button</sys:String>
-    <sys:String x:Key="DemoStatus1">Active</sys:String>
-    <sys:String x:Key="DemoName2">TextBox</sys:String>
-    <sys:String x:Key="DemoDesc2">Text input field</sys:String>
-    <sys:String x:Key="DemoStatus2">Empty</sys:String>
-    <sys:String x:Key="DemoName3">ComboBox</sys:String>
-    <sys:String x:Key="DemoDesc3">Dropdown list</sys:String>
-    <sys:String x:Key="DemoStatus3">Selected</sys:String>
-    <sys:String x:Key="DemoName4">CheckBox</sys:String>
-    <sys:String x:Key="DemoDesc4">Checkbox</sys:String>
-    <sys:String x:Key="DemoStatus4">Checked</sys:String>
-
-    <!-- Layouts -->
     <sys:String x:Key="StackPanelVertical">StackPanel (Vertical)</sys:String>
     <sys:String x:Key="StackPanelHorizontal">StackPanel (Horizontal)</sys:String>
     <sys:String x:Key="WrapPanel">WrapPanel (Wrap)</sys:String>
@@ -87,7 +61,6 @@
     <sys:String x:Key="Grid">Grid (Table)</sys:String>
     <sys:String x:Key="Canvas">Canvas (Absolute)</sys:String>
 
-    <!-- Tables -->
     <sys:String x:Key="SourceTable">Source Table</sys:String>
     <sys:String x:Key="TargetTable">Target Table</sys:String>
     <sys:String x:Key="Add">Add</sys:String>
@@ -98,21 +71,25 @@
     <sys:String x:Key="DescriptionColumn">Description</sys:String>
     <sys:String x:Key="StatusColumn">Status</sys:String>
 
-    <!-- SourceItems data -->
-    <sys:String x:Key="SourceItem1Name">Item 1</sys:String>
-    <sys:String x:Key="SourceItem1Desc">Test description</sys:String>
-    <sys:String x:Key="SourceItem1Status">Active</sys:String>
-    <sys:String x:Key="SourceItem2Name">Item 2</sys:String>
-    <sys:String x:Key="SourceItem2Desc">Another description</sys:String>
-    <sys:String x:Key="SourceItem2Status">Pending</sys:String>
-    <sys:String x:Key="NewItemName">New item</sys:String>
-    <sys:String x:Key="NewItemDesc">Description</sys:String>
-    <sys:String x:Key="NewItemStatus">New</sys:String>
-
-    <!-- Bindings -->
-    <sys:String x:Key="BindingDemo">UpdateSourceTrigger Modes Demo</sys:String>
-    <sys:String x:Key="PropertyChanged">1. PropertyChanged (Update on each character)</sys:String>
-    <sys:String x:Key="LostFocus">2. LostFocus (Update on focus loss)</sys:String>
-    <sys:String x:Key="Explicit">3. Explicit (Manual update by button)</sys:String>
+    <sys:String x:Key="BindingDemo">Binding Types (Mode) and Update Modes (UpdateSourceTrigger) Demo</sys:String>
+    <sys:String x:Key="BindingModeSection">Binding Types (Mode)</sys:String>
+    <sys:String x:Key="UpdateSection">Update Modes (UpdateSourceTrigger)</sys:String>
+    <sys:String x:Key="ModeTwoWay">TwoWay (bidirectional)</sys:String>
+    <sys:String x:Key="ModeOneWay">OneWay (from ViewModel only)</sys:String>
+    <sys:String x:Key="ModeOneTime">OneTime (on load only)</sys:String>
+    <sys:String x:Key="ModeOneWayToSource">OneWayToSource (to ViewModel only)</sys:String>
+    <sys:String x:Key="TriggerPropertyChanged">PropertyChanged (on each character)</sys:String>
+    <sys:String x:Key="TriggerLostFocus">LostFocus (on focus loss)</sys:String>
+    <sys:String x:Key="TriggerExplicit">Explicit (manual by button)</sys:String>
     <sys:String x:Key="UpdateExplicit">Update Explicitly</sys:String>
+
+    <!-- Menu -->
+    <sys:String x:Key="FileMenu">File</sys:String>
+    <sys:String x:Key="OpenItem">Open</sys:String>
+    <sys:String x:Key="SaveItem">Save</sys:String>
+    <sys:String x:Key="ExitItem">Exit</sys:String>
+    <sys:String x:Key="EditMenu">Edit</sys:String>
+    <sys:String x:Key="HelpMenu">Help</sys:String>
+    <sys:String x:Key="AboutItem">About</sys:String>
+    <sys:String x:Key="PropertiesItem">Properties</sys:String>
 </ResourceDictionary>
