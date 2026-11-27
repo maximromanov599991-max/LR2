@@ -1,5 +1,6 @@
 ﻿using System.Windows;
-using System.Windows.Input;
+using System.Windows.Controls;
+using System.Windows.Data;
 using Lab_1.ViewModels;
 
 namespace Lab_1
@@ -11,36 +12,29 @@ namespace Lab_1
             InitializeComponent();
         }
 
-        private MainViewModel VM => DataContext as MainViewModel;
 
-        private void Copy_Executed(object sender, ExecutedRoutedEventArgs e)
+        /// Обработчик кнопки "Обновить явно" для демонстрации UpdateSourceTrigger=Explicit.
+        /// Принудительно передаёт значение из TextBox в ViewModel через UpdateSource().
+        private void UpdateExplicit_Click(object sender, RoutedEventArgs e)
         {
-            VM?.CopyCommand.Execute(null);
-        }
+            // 1. Получаем BindingExpression для свойства Text у TextBox
+            BindingExpression bindingExpression = ExplicitTextBox.GetBindingExpression(TextBox.TextProperty);
 
-        private void Copy_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = VM?.SelectedSourceItem != null;
-        }
+            // 2. Принудительно передаём значение из TextBox в источник привязки (ViewModel)
+            bindingExpression.UpdateSource();
 
-        private void Paste_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            VM?.PasteCommand.Execute(null);
-        }
+            // 3. Получаем ViewModel из DataContext окна
+            MainViewModel viewModel = DataContext as MainViewModel;
 
-        private void New_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            VM?.AddCommand.Execute(null);
-        }
-
-        private void Delete_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            VM?.DeleteCommand.Execute(null);
-        }
-
-        private void Delete_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = VM?.SelectedSourceItem != null;
+            // 4. Показываем актуальное значение в MessageBox
+            if (viewModel != null)
+            {
+                MessageBox.Show(
+                    $"Значение обновлено явно: {viewModel.BindingExplicit}",
+                    "Явное обновление",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
         }
     }
 }

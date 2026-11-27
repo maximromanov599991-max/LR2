@@ -12,6 +12,7 @@
     </Window.DataContext>
 
     <Window.Resources>
+        <!-- Палитра основного цвета (синий) -->
         <XmlDataProvider x:Key="PrimaryColors">
             <x:XData>
                 <Colors xmlns="">
@@ -29,6 +30,79 @@
             </x:XData>
         </XmlDataProvider>
 
+        <!-- Палитра акцентного цвета (оранжевый) -->
+        <XmlDataProvider x:Key="AccentColors">
+            <x:XData>
+                <Colors xmlns="">
+                    <Color Hex="#FFF3E0" RGB="255, 243, 224" Name="Акцентный 50"/>
+                    <Color Hex="#FFE0B2" RGB="255, 224, 178" Name="Акцентный 100"/>
+                    <Color Hex="#FFCC80" RGB="255, 204, 128" Name="Акцентный 200"/>
+                    <Color Hex="#FFB74D" RGB="255, 183, 77" Name="Акцентный 300"/>
+                    <Color Hex="#FFA726" RGB="255, 167, 38" Name="Акцентный 400"/>
+                    <Color Hex="#FF9800" RGB="255, 152, 0" Name="Акцентный 500 (Базовый)"/>
+                    <Color Hex="#FB8C00" RGB="251, 140, 0" Name="Акцентный 600"/>
+                    <Color Hex="#F57C00" RGB="245, 124, 0" Name="Акцентный 700"/>
+                    <Color Hex="#EF6C00" RGB="239, 108, 0" Name="Акцентный 800"/>
+                    <Color Hex="#E65100" RGB="230, 81, 0" Name="Акцентный 900"/>
+                </Colors>
+            </x:XData>
+        </XmlDataProvider>
+
+        <!-- Палитра цвета Успех (зелёный) -->
+        <XmlDataProvider x:Key="SuccessColors">
+            <x:XData>
+                <Colors xmlns="">
+                    <Color Hex="#E8F5E9" RGB="232, 245, 233" Name="Успех 50"/>
+                    <Color Hex="#C8E6C9" RGB="200, 230, 201" Name="Успех 100"/>
+                    <Color Hex="#A5D6A7" RGB="165, 214, 167" Name="Успех 200"/>
+                    <Color Hex="#81C784" RGB="129, 199, 132" Name="Успех 300"/>
+                    <Color Hex="#66BB6A" RGB="102, 187, 106" Name="Успех 400"/>
+                    <Color Hex="#4CAF50" RGB="76, 175, 80" Name="Успех 500 (Базовый)"/>
+                    <Color Hex="#43A047" RGB="67, 160, 71" Name="Успех 600"/>
+                    <Color Hex="#388E3C" RGB="56, 142, 60" Name="Успех 700"/>
+                    <Color Hex="#2E7D32" RGB="46, 125, 50" Name="Успех 800"/>
+                    <Color Hex="#1B5E20" RGB="27, 94, 32" Name="Успех 900"/>
+                </Colors>
+            </x:XData>
+        </XmlDataProvider>
+
+        <!-- Палитра цвета Ошибка (красный) -->
+        <XmlDataProvider x:Key="ErrorColors">
+            <x:XData>
+                <Colors xmlns="">
+                    <Color Hex="#FFEBEE" RGB="255, 235, 238" Name="Ошибка 50"/>
+                    <Color Hex="#FFCDD2" RGB="255, 205, 210" Name="Ошибка 100"/>
+                    <Color Hex="#EF9A9A" RGB="239, 154, 154" Name="Ошибка 200"/>
+                    <Color Hex="#E57373" RGB="229, 115, 115" Name="Ошибка 300"/>
+                    <Color Hex="#EF5350" RGB="239, 83, 80" Name="Ошибка 400"/>
+                    <Color Hex="#F44336" RGB="244, 67, 54" Name="Ошибка 500 (Базовый)"/>
+                    <Color Hex="#E53935" RGB="229, 57, 53" Name="Ошибка 600"/>
+                    <Color Hex="#D32F2F" RGB="211, 47, 47" Name="Ошибка 700"/>
+                    <Color Hex="#C62828" RGB="198, 40, 40" Name="Ошибка 800"/>
+                    <Color Hex="#B71C1C" RGB="183, 28, 28" Name="Ошибка 900"/>
+                </Colors>
+            </x:XData>
+        </XmlDataProvider>
+
+        <!-- Палитра цвета Информация (голубой) -->
+        <XmlDataProvider x:Key="InfoColors">
+            <x:XData>
+                <Colors xmlns="">
+                    <Color Hex="#E0F7FA" RGB="224, 247, 250" Name="Информация 50"/>
+                    <Color Hex="#B2EBF2" RGB="178, 235, 242" Name="Информация 100"/>
+                    <Color Hex="#80DEEA" RGB="128, 222, 234" Name="Информация 200"/>
+                    <Color Hex="#4DD0E1" RGB="77, 208, 225" Name="Информация 300"/>
+                    <Color Hex="#26C6DA" RGB="38, 198, 218" Name="Информация 400"/>
+                    <Color Hex="#00BCD4" RGB="0, 188, 212" Name="Информация 500 (Базовый)"/>
+                    <Color Hex="#00ACC1" RGB="0, 172, 193" Name="Информация 600"/>
+                    <Color Hex="#0097A7" RGB="0, 151, 167" Name="Информация 700"/>
+                    <Color Hex="#00838F" RGB="0, 131, 143" Name="Информация 800"/>
+                    <Color Hex="#006064" RGB="0, 96, 100" Name="Информация 900"/>
+                </Colors>
+            </x:XData>
+        </XmlDataProvider>
+
+        <!-- Данные для TreeView -->
         <XmlDataProvider x:Key="TreeData">
             <x:XData>
                 <Tree xmlns="">
@@ -51,6 +125,7 @@
             </x:XData>
         </XmlDataProvider>
 
+        <!-- Демо-данные для DataGrid -->
         <XmlDataProvider x:Key="DemoGridData">
             <x:XData>
                 <Items xmlns="">
@@ -65,69 +140,76 @@
 
     <DockPanel>
 
-        <!-- ГЛАВНОЕ МЕНЮ (Файл / Правка / Справка) -->
+        <!-- ГЛАВНОЕ МЕНЮ -->
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{Binding Translations[FileMenu]}">
                 <MenuItem Header="{Binding Translations[Open]}" 
-                  Command="{Binding OpenCommand}" 
-                  InputGestureText="Ctrl+O"/>
+                          Command="{Binding OpenCommand}" InputGestureText="Ctrl+O"/>
                 <MenuItem Header="{Binding Translations[Save]}" 
-                  Command="{Binding SaveCommand}" 
-                  InputGestureText="Ctrl+S"/>
+                          Command="{Binding SaveCommand}" InputGestureText="Ctrl+S"/>
                 <Separator/>
                 <MenuItem Header="{Binding Translations[Exit]}" 
-                  Command="{Binding ExitCommand}"/>
+                          Command="{Binding ExitCommand}"/>
             </MenuItem>
             <MenuItem Header="{Binding Translations[EditMenu]}">
                 <MenuItem Header="{Binding Translations[Undo]}" 
-                  Command="{Binding UndoCommand}" 
-                  InputGestureText="Ctrl+Z"/>
+                          Command="{Binding UndoCommand}" InputGestureText="Ctrl+Z"/>
                 <MenuItem Header="{Binding Translations[Redo]}" 
-                  Command="{Binding RedoCommand}" 
-                  InputGestureText="Ctrl+Y"/>
+                          Command="{Binding RedoCommand}" InputGestureText="Ctrl+Y"/>
             </MenuItem>
             <MenuItem Header="{Binding Translations[HelpMenu]}">
                 <MenuItem Header="{Binding Translations[About]}" 
-                  Command="{Binding AboutCommand}"/>
+                          Command="{Binding AboutCommand}"/>
             </MenuItem>
         </Menu>
+
         <!-- Панель инструментов -->
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar>
-                <Button Content="{Binding Translations[Copy]}" Command="{Binding CopyCommand}" Style="{DynamicResource ToolBarButtonStyle}"/>
-                <Button Content="{Binding Translations[Paste]}" Command="{Binding PasteCommand}" Style="{DynamicResource ToolBarButtonStyle}"/>
+                <Button Content="{Binding Translations[Copy]}" 
+                        Command="{Binding CopyCommand}" 
+                        Style="{DynamicResource ToolBarButtonStyle}"/>
+                <Button Content="{Binding Translations[Paste]}" 
+                        Command="{Binding PasteCommand}" 
+                        Style="{DynamicResource ToolBarButtonStyle}"/>
             </ToolBar>
         </ToolBarTray>
 
         <TabControl Margin="10">
 
-            <!-- ВКЛАДКА 1: Основное -->
+            <!-- ==================== ВКЛАДКА 1: ОСНОВНОЕ ==================== -->
             <TabItem Header="{Binding Translations[TabMain]}">
                 <ScrollViewer>
                     <StackPanel Margin="15">
-                        <GroupBox Header="{Binding Translations[PersonalizationSettings]}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[PersonalizationSettings]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
-                                <TextBlock Text="{Binding Translations[ThemeLabel]}" Style="{DynamicResource LabelStyle}"/>
-                                <ComboBox Text="{Binding SelectedTheme, Mode=TwoWay}" Style="{DynamicResource AppInputStyle}">
+                                <TextBlock Text="{Binding Translations[ThemeLabel]}" 
+                                           Style="{DynamicResource LabelStyle}"/>
+                                <ComboBox Text="{Binding SelectedTheme, Mode=TwoWay}" 
+                                          Style="{DynamicResource AppInputStyle}">
                                     <ComboBoxItem Content="{Binding Translations[LightTheme]}"/>
                                     <ComboBoxItem Content="{Binding Translations[DarkTheme]}"/>
                                 </ComboBox>
 
-                                <TextBlock Text="{Binding Translations[LanguageLabel]}" Style="{DynamicResource LabelStyle}"/>
-                                <ComboBox Text="{Binding SelectedLanguage, Mode=TwoWay}" Style="{DynamicResource AppInputStyle}">
+                                <TextBlock Text="{Binding Translations[LanguageLabel]}" 
+                                           Style="{DynamicResource LabelStyle}"/>
+                                <ComboBox Text="{Binding SelectedLanguage, Mode=TwoWay}" 
+                                          Style="{DynamicResource AppInputStyle}">
                                     <ComboBoxItem Content="{Binding Translations[Russian]}"/>
                                     <ComboBoxItem Content="{Binding Translations[English]}"/>
                                 </ComboBox>
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{Binding Translations[FontSettings]}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[FontSettings]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
-                                <TextBlock Text="{Binding Translations[FontLabel]}" Style="{DynamicResource LabelStyle}"/>
-                                <!-- Привязка шрифта через SelectedValue + SelectedValuePath -->
+                                <TextBlock Text="{Binding Translations[FontLabel]}" 
+                                           Style="{DynamicResource LabelStyle}"/>
                                 <ComboBox SelectedValue="{Binding SelectedFontFamily, Mode=TwoWay}"
-                              SelectedValuePath="Content"
-                              Style="{DynamicResource AppInputStyle}">
+                                          SelectedValuePath="Content"
+                                          Style="{DynamicResource AppInputStyle}">
                                     <ComboBoxItem Content="Segoe UI"/>
                                     <ComboBoxItem Content="Arial"/>
                                     <ComboBoxItem Content="Times New Roman"/>
@@ -135,50 +217,67 @@
                                     <ComboBoxItem Content="Verdana"/>
                                 </ComboBox>
 
-                                <TextBlock Text="{Binding Translations[FontSizeLabel]}" Style="{DynamicResource LabelStyle}"/>
-                                <Slider Minimum="10" Maximum="24" Value="{Binding FontSize, Mode=TwoWay}"
-                            TickFrequency="1" IsSnapToTickEnabled="True" Margin="0,0,0,10"/>
-                                <!-- Локализованный текст через вычисляемое свойство -->
+                                <TextBlock Text="{Binding Translations[FontSizeLabel]}" 
+                                           Style="{DynamicResource LabelStyle}"/>
+                                <Slider Minimum="10" Maximum="24" 
+                                        Value="{Binding FontSize, Mode=TwoWay}"
+                                        TickFrequency="1" IsSnapToTickEnabled="True" 
+                                        Margin="0,0,0,10"/>
                                 <TextBlock Text="{Binding CurrentFontSizeText}"
-                               HorizontalAlignment="Center" FontWeight="Bold"/>
+                                           HorizontalAlignment="Center" FontWeight="Bold"/>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ВКЛАДКА 2: Цветовая палитра -->
+            <!-- ==================== ВКЛАДКА 2: ЦВЕТОВАЯ ПАЛИТРА ==================== -->
             <TabItem Header="{Binding Translations[TabPalette]}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
-                        <TextBlock Text="{Binding CurrentThemeText}" Style="{DynamicResource HeaderTextBlockStyle}"/>
+                        <TextBlock Text="{Binding CurrentThemeText}" 
+                                   Style="{DynamicResource HeaderTextBlockStyle}"/>
 
-                        <GroupBox Header="{Binding Translations[MainColors]}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <!-- Основные цвета -->
+                        <GroupBox Header="{Binding Translations[MainColors]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
                                 <StackPanel Margin="10" HorizontalAlignment="Center">
-                                    <Rectangle Width="60" Height="60" Fill="{DynamicResource PrimaryBrush}" RadiusX="5" RadiusY="5"/>
-                                    <TextBlock Text="{Binding Translations[Primary]}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                    <Rectangle Width="60" Height="60" Fill="{DynamicResource PrimaryBrush}" 
+                                               RadiusX="5" RadiusY="5"/>
+                                    <TextBlock Text="{Binding Translations[Primary]}" 
+                                               HorizontalAlignment="Center" Margin="0,5,0,0"/>
                                 </StackPanel>
                                 <StackPanel Margin="10" HorizontalAlignment="Center">
-                                    <Rectangle Width="60" Height="60" Fill="{DynamicResource AccentBrush}" RadiusX="5" RadiusY="5"/>
-                                    <TextBlock Text="{Binding Translations[Accent]}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                    <Rectangle Width="60" Height="60" Fill="{DynamicResource AccentBrush}" 
+                                               RadiusX="5" RadiusY="5"/>
+                                    <TextBlock Text="{Binding Translations[Accent]}" 
+                                               HorizontalAlignment="Center" Margin="0,5,0,0"/>
                                 </StackPanel>
                                 <StackPanel Margin="10" HorizontalAlignment="Center">
-                                    <Rectangle Width="60" Height="60" Fill="{DynamicResource SuccessBrush}" RadiusX="5" RadiusY="5"/>
-                                    <TextBlock Text="{Binding Translations[Success]}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                    <Rectangle Width="60" Height="60" Fill="{DynamicResource SuccessBrush}" 
+                                               RadiusX="5" RadiusY="5"/>
+                                    <TextBlock Text="{Binding Translations[Success]}" 
+                                               HorizontalAlignment="Center" Margin="0,5,0,0"/>
                                 </StackPanel>
                                 <StackPanel Margin="10" HorizontalAlignment="Center">
-                                    <Rectangle Width="60" Height="60" Fill="{DynamicResource ErrorBrush}" RadiusX="5" RadiusY="5"/>
-                                    <TextBlock Text="{Binding Translations[Error]}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                    <Rectangle Width="60" Height="60" Fill="{DynamicResource ErrorBrush}" 
+                                               RadiusX="5" RadiusY="5"/>
+                                    <TextBlock Text="{Binding Translations[Error]}" 
+                                               HorizontalAlignment="Center" Margin="0,5,0,0"/>
                                 </StackPanel>
                                 <StackPanel Margin="10" HorizontalAlignment="Center">
-                                    <Rectangle Width="60" Height="60" Fill="{DynamicResource InfoBrush}" RadiusX="5" RadiusY="5"/>
-                                    <TextBlock Text="{Binding Translations[Info]}" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                    <Rectangle Width="60" Height="60" Fill="{DynamicResource InfoBrush}" 
+                                               RadiusX="5" RadiusY="5"/>
+                                    <TextBlock Text="{Binding Translations[Info]}" 
+                                               HorizontalAlignment="Center" Margin="0,5,0,0"/>
                                 </StackPanel>
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{Binding Translations[ColorPalette]}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <!-- Таблица основного цвета -->
+                        <GroupBox Header="{Binding Translations[ColorPalette]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
                             <ItemsControl ItemsSource="{Binding Source={StaticResource PrimaryColors}, XPath=Colors/Color}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -188,9 +287,108 @@
                                                 <ColumnDefinition Width="150"/>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-                                            <Rectangle Fill="{Binding XPath=@Hex}" Width="60" Height="30" Stroke="Gray" RadiusX="3" RadiusY="3"/>
-                                            <TextBlock Text="{Binding XPath=@RGB}" Grid.Column="1" VerticalAlignment="Center" Margin="5,0,0,0"/>
-                                            <TextBlock Text="{Binding XPath=@Name}" Grid.Column="2" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                            <Rectangle Fill="{Binding XPath=@Hex}" Width="60" Height="30" 
+                                                       Stroke="Gray" RadiusX="3" RadiusY="3"/>
+                                            <TextBlock Text="{Binding XPath=@RGB}" Grid.Column="1" 
+                                                       VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding XPath=@Name}" Grid.Column="2" 
+                                                       VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+
+                        <!-- Таблица акцентного цвета -->
+                        <GroupBox Header="{Binding Translations[AccentPalette]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource AccentColors}, XPath=Colors/Color}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Fill="{Binding XPath=@Hex}" Width="60" Height="30" 
+                                                       Stroke="Gray" RadiusX="3" RadiusY="3"/>
+                                            <TextBlock Text="{Binding XPath=@RGB}" Grid.Column="1" 
+                                                       VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding XPath=@Name}" Grid.Column="2" 
+                                                       VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+
+                        <!-- Таблица цвета Успех -->
+                        <GroupBox Header="{Binding Translations[SuccessPalette]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource SuccessColors}, XPath=Colors/Color}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Fill="{Binding XPath=@Hex}" Width="60" Height="30" 
+                                                       Stroke="Gray" RadiusX="3" RadiusY="3"/>
+                                            <TextBlock Text="{Binding XPath=@RGB}" Grid.Column="1" 
+                                                       VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding XPath=@Name}" Grid.Column="2" 
+                                                       VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+
+                        <!-- Таблица цвета Ошибка -->
+                        <GroupBox Header="{Binding Translations[ErrorPalette]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource ErrorColors}, XPath=Colors/Color}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Fill="{Binding XPath=@Hex}" Width="60" Height="30" 
+                                                       Stroke="Gray" RadiusX="3" RadiusY="3"/>
+                                            <TextBlock Text="{Binding XPath=@RGB}" Grid.Column="1" 
+                                                       VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding XPath=@Name}" Grid.Column="2" 
+                                                       VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+
+                        <!-- Таблица цвета Информация -->
+                        <GroupBox Header="{Binding Translations[InfoPalette]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
+                            <ItemsControl ItemsSource="{Binding Source={StaticResource InfoColors}, XPath=Colors/Color}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Margin="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="80"/>
+                                                <ColumnDefinition Width="150"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Rectangle Fill="{Binding XPath=@Hex}" Width="60" Height="30" 
+                                                       Stroke="Gray" RadiusX="3" RadiusY="3"/>
+                                            <TextBlock Text="{Binding XPath=@RGB}" Grid.Column="1" 
+                                                       VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                            <TextBlock Text="{Binding XPath=@Name}" Grid.Column="2" 
+                                                       VerticalAlignment="Center" Margin="5,0,0,0"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -200,25 +398,32 @@
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ВКЛАДКА 3: Элементы управления -->
+            <!-- ==================== ВКЛАДКА 3: ЭЛЕМЕНТЫ УПРАВЛЕНИЯ ==================== -->
             <TabItem Header="{Binding Translations[TabControls]}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
                         <Expander Header="{Binding Translations[Buttons]}" IsExpanded="True" Margin="0,5">
                             <StackPanel Orientation="Horizontal" Margin="10">
-                                <Button Content="{Binding Translations[NormalButton]}" Style="{DynamicResource PrimaryButtonStyle}" ToolTip="Всплывающая подсказка"/>
-                                <Button Content="{Binding Translations[SuccessButton]}" Style="{DynamicResource SuccessButtonStyle}"/>
-                                <Button Content="{Binding Translations[DeleteButton]}" Style="{DynamicResource DangerButtonStyle}"/>
-                                <ToggleButton Content="{Binding Translations[ToggleButton]}" Style="{DynamicResource PrimaryButtonStyle}"/>
+                                <Button Content="{Binding Translations[NormalButton]}" 
+                                        Style="{DynamicResource PrimaryButtonStyle}" 
+                                        ToolTip="Всплывающая подсказка"/>
+                                <Button Content="{Binding Translations[SuccessButton]}" 
+                                        Style="{DynamicResource SuccessButtonStyle}"/>
+                                <Button Content="{Binding Translations[DeleteButton]}" 
+                                        Style="{DynamicResource DangerButtonStyle}"/>
+                                <ToggleButton Content="{Binding Translations[ToggleButton]}" 
+                                              Style="{DynamicResource PrimaryButtonStyle}"/>
                             </StackPanel>
                         </Expander>
 
                         <Expander Header="{Binding Translations[InputFields]}" IsExpanded="True" Margin="0,5">
                             <StackPanel Margin="10">
                                 <TextBox Text="TextBox: введите текст" Style="{DynamicResource AppInputStyle}"/>
-                                <PasswordBox Password="secret" Padding="6,4" Margin="0,0,0,10" BorderBrush="#CCCCCC" BorderThickness="1"/>
+                                <PasswordBox Password="secret" Padding="6,4" Margin="0,0,0,10" 
+                                             BorderBrush="#CCCCCC" BorderThickness="1"/>
                                 <StackPanel Orientation="Horizontal">
-                                    <ComboBox Text="ComboBox" IsEditable="True" Width="200" Margin="0,0,10,0" Style="{DynamicResource AppInputStyle}"/>
+                                    <ComboBox Text="ComboBox" IsEditable="True" Width="200" 
+                                              Margin="0,0,10,0" Style="{DynamicResource AppInputStyle}"/>
                                     <ListBox Width="200" Height="60">
                                         <ListBoxItem Content="Элемент 1"/>
                                         <ListBoxItem Content="Элемент 2"/>
@@ -232,7 +437,8 @@
                                 <TextBlock Text="Заголовок уровня 1" FontSize="24" FontWeight="Bold" Margin="0,5"/>
                                 <TextBlock Text="Заголовок уровня 2" FontSize="20" FontWeight="SemiBold" Margin="0,5"/>
                                 <TextBlock Text="Обычный текст в TextBlock." Margin="0,5"/>
-                                <Label Content="Подпись в Label" BorderBrush="Gray" BorderThickness="1" Padding="5" Margin="0,5"/>
+                                <Label Content="Подпись в Label" BorderBrush="Gray" BorderThickness="1" 
+                                       Padding="5" Margin="0,5"/>
                             </StackPanel>
                         </Expander>
 
@@ -262,18 +468,20 @@
                         <Expander Header="{Binding Translations[ProgressBar]}" IsExpanded="False" Margin="0,5">
                             <StackPanel Margin="10">
                                 <ProgressBar Value="65" Height="25" Margin="0,5" Maximum="100"/>
-                                <TextBlock Text="{Binding Translations[ProgressText]}" HorizontalAlignment="Center" Margin="0,5"/>
+                                <TextBlock Text="{Binding Translations[ProgressText]}" 
+                                           HorizontalAlignment="Center" Margin="0,5"/>
                             </StackPanel>
                         </Expander>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ВКЛАДКА 4: Контейнеры компоновки -->
+            <!-- ==================== ВКЛАДКА 4: КОНТЕЙНЕРЫ КОМПОНОВКИ ==================== -->
             <TabItem Header="{Binding Translations[TabLayouts]}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
-                        <GroupBox Header="{Binding Translations[StackPanelVertical]}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[StackPanelVertical]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10" Background="{DynamicResource SecondaryBackgroundBrush}">
                                 <Rectangle Fill="{DynamicResource ErrorBrush}" Width="60" Height="40" Margin="2"/>
                                 <Rectangle Fill="{DynamicResource SuccessBrush}" Width="60" Height="40" Margin="2"/>
@@ -281,7 +489,8 @@
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{Binding Translations[StackPanelHorizontal]}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[StackPanelHorizontal]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Orientation="Horizontal" Margin="10" Background="{DynamicResource SecondaryBackgroundBrush}">
                                 <Rectangle Fill="{DynamicResource ErrorBrush}" Width="60" Height="40" Margin="2"/>
                                 <Rectangle Fill="{DynamicResource SuccessBrush}" Width="60" Height="40" Margin="2"/>
@@ -289,7 +498,8 @@
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{Binding Translations[WrapPanel]}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[WrapPanel]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
                             <WrapPanel Margin="10" Background="{DynamicResource SecondaryBackgroundBrush}">
                                 <Rectangle Fill="{DynamicResource ErrorBrush}" Width="80" Height="40" Margin="2"/>
                                 <Rectangle Fill="{DynamicResource SuccessBrush}" Width="80" Height="40" Margin="2"/>
@@ -299,7 +509,8 @@
                             </WrapPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{Binding Translations[DockPanel]}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[DockPanel]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
                             <DockPanel Margin="10" Background="{DynamicResource SecondaryBackgroundBrush}" Height="140">
                                 <Rectangle Fill="{DynamicResource ErrorBrush}" Width="60" DockPanel.Dock="Left" Margin="2"/>
                                 <Rectangle Fill="{DynamicResource SuccessBrush}" Height="40" DockPanel.Dock="Top" Margin="2"/>
@@ -308,7 +519,8 @@
                             </DockPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{Binding Translations[Grid]}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[Grid]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
                             <Grid Margin="10" Background="{DynamicResource SecondaryBackgroundBrush}" Height="140">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
@@ -325,18 +537,22 @@
                             </Grid>
                         </GroupBox>
 
-                        <GroupBox Header="{Binding Translations[Canvas]}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[Canvas]}" 
+                                  Style="{DynamicResource AppGroupBoxStyle}">
                             <Canvas Margin="10" Background="{DynamicResource SecondaryBackgroundBrush}" Height="140">
-                                <Rectangle Fill="{DynamicResource ErrorBrush}" Width="60" Height="40" Canvas.Left="20" Canvas.Top="20"/>
-                                <Rectangle Fill="{DynamicResource SuccessBrush}" Width="60" Height="40" Canvas.Left="100" Canvas.Top="50"/>
-                                <Rectangle Fill="{DynamicResource PrimaryBrush}" Width="60" Height="40" Canvas.Left="60" Canvas.Top="90"/>
+                                <Rectangle Fill="{DynamicResource ErrorBrush}" Width="60" Height="40" 
+                                           Canvas.Left="20" Canvas.Top="20"/>
+                                <Rectangle Fill="{DynamicResource SuccessBrush}" Width="60" Height="40" 
+                                           Canvas.Left="100" Canvas.Top="50"/>
+                                <Rectangle Fill="{DynamicResource PrimaryBrush}" Width="60" Height="40" 
+                                           Canvas.Left="60" Canvas.Top="90"/>
                             </Canvas>
                         </GroupBox>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
 
-            <!-- ВКЛАДКА 5: Таблицы и Команды -->
+            <!-- ==================== ВКЛАДКА 5: ТАБЛИЦЫ И КОМАНДЫ ==================== -->
             <TabItem Header="{Binding Translations[TabTables]}">
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
@@ -344,71 +560,95 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <GroupBox Header="{Binding Translations[SourceTable]}" Grid.Column="0" Style="{DynamicResource AppGroupBoxStyle}">
+                    <GroupBox Header="{Binding Translations[SourceTable]}" Grid.Column="0" 
+                              Style="{DynamicResource AppGroupBoxStyle}">
                         <DockPanel>
                             <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
-                                <Button Content="{Binding Translations[Add]}" Command="{Binding AddCommand}" Style="{DynamicResource SuccessButtonStyle}"/>
-                                <Button Content="{Binding Translations[Delete]}" Command="{Binding DeleteCommand}" Style="{DynamicResource DangerButtonStyle}"/>
+                                <Button Content="{Binding Translations[Add]}" 
+                                        Command="{Binding AddCommand}" 
+                                        Style="{DynamicResource SuccessButtonStyle}"/>
+                                <Button Content="{Binding Translations[Delete]}" 
+                                        Command="{Binding DeleteCommand}" 
+                                        Style="{DynamicResource DangerButtonStyle}"/>
                             </StackPanel>
                             <DataGrid ItemsSource="{Binding SourceItems}"
                                       SelectedItem="{Binding SelectedSourceItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                       Style="{DynamicResource AppDataGridStyle}"
                                       AutoGenerateColumns="False" IsReadOnly="False">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="{Binding Translations[NameColumn]}" Binding="{Binding Name}" Width="*"/>
-                                    <DataGridTextColumn Header="{Binding Translations[DescriptionColumn]}" Binding="{Binding Description}" Width="2*"/>
-                                    <DataGridTextColumn Header="{Binding Translations[StatusColumn]}" Binding="{Binding Status}" Width="*"/>
+                                    <DataGridTextColumn Header="{Binding Translations[NameColumn]}" 
+                                                        Binding="{Binding Name}" Width="*"/>
+                                    <DataGridTextColumn Header="{Binding Translations[DescriptionColumn]}" 
+                                                        Binding="{Binding Description}" Width="2*"/>
+                                    <DataGridTextColumn Header="{Binding Translations[StatusColumn]}" 
+                                                        Binding="{Binding Status}" Width="*"/>
                                 </DataGrid.Columns>
                             </DataGrid>
                         </DockPanel>
                     </GroupBox>
 
-                    <GroupBox Header="{Binding Translations[TargetTable]}" Grid.Column="1" Style="{DynamicResource AppGroupBoxStyle}">
+                    <GroupBox Header="{Binding Translations[TargetTable]}" Grid.Column="1" 
+                              Style="{DynamicResource AppGroupBoxStyle}">
                         <DataGrid ItemsSource="{Binding TargetItems}"
                                   SelectedItem="{Binding SelectedTargetItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                   Style="{DynamicResource AppDataGridStyle}"
                                   AutoGenerateColumns="False" IsReadOnly="True">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="{Binding Translations[NameColumn]}" Binding="{Binding Name}" Width="*"/>
-                                <DataGridTextColumn Header="{Binding Translations[DescriptionColumn]}" Binding="{Binding Description}" Width="2*"/>
-                                <DataGridTextColumn Header="{Binding Translations[StatusColumn]}" Binding="{Binding Status}" Width="*"/>
+                                <DataGridTextColumn Header="{Binding Translations[NameColumn]}" 
+                                                    Binding="{Binding Name}" Width="*"/>
+                                <DataGridTextColumn Header="{Binding Translations[DescriptionColumn]}" 
+                                                    Binding="{Binding Description}" Width="2*"/>
+                                <DataGridTextColumn Header="{Binding Translations[StatusColumn]}" 
+                                                    Binding="{Binding Status}" Width="*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </GroupBox>
                 </Grid>
             </TabItem>
 
-            <!-- ВКЛАДКА 6: Типы привязок -->
+            <!-- ВКЛАДКА 6: ТИПЫ ПРИВЯЗОК -->
             <TabItem Header="{Binding Translations[TabBindings]}">
                 <ScrollViewer Margin="15">
                     <StackPanel>
-                        <TextBlock Text="{Binding Translations[BindingDemo]}" Style="{DynamicResource HeaderTextBlockStyle}"/>
+                        <TextBlock Text="{Binding Translations[BindingDemo]}" 
+                       Style="{DynamicResource HeaderTextBlockStyle}"/>
 
-                        <GroupBox Header="{Binding Translations[PropertyChanged]}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[PropertyChanged]}" 
+                      Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
-                                <TextBox Text="{Binding BindingPropertyChanged, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource AppInputStyle}"/>
-                                <TextBlock Text="{Binding BindingPropertyChanged}" FontStyle="Italic" Foreground="Gray"/>
+                                <TextBox Text="{Binding BindingPropertyChanged, UpdateSourceTrigger=PropertyChanged}" 
+                             Style="{DynamicResource AppInputStyle}"/>
+                                <TextBlock Text="{Binding BindingPropertyChanged}" 
+                               FontStyle="Italic" Foreground="Gray"/>
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{Binding Translations[LostFocus]}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <GroupBox Header="{Binding Translations[LostFocus]}" 
+                      Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
-                                <TextBox Text="{Binding BindingLostFocus, UpdateSourceTrigger=LostFocus}" Style="{DynamicResource AppInputStyle}"/>
-                                <TextBlock Text="{Binding BindingLostFocus}" FontStyle="Italic" Foreground="Gray"/>
+                                <TextBox Text="{Binding BindingLostFocus, UpdateSourceTrigger=LostFocus}" 
+                             Style="{DynamicResource AppInputStyle}"/>
+                                <TextBlock Text="{Binding BindingLostFocus}" 
+                               FontStyle="Italic" Foreground="Gray"/>
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{Binding Translations[Explicit]}" Style="{DynamicResource AppGroupBoxStyle}">
+                        <!-- Explicit — с x:Name и обработчиком Click -->
+                        <GroupBox Header="{Binding Translations[Explicit]}" 
+                      Style="{DynamicResource AppGroupBoxStyle}">
                             <StackPanel Margin="10">
-                                <TextBox Text="{Binding BindingExplicit, UpdateSourceTrigger=Explicit}" Style="{DynamicResource AppInputStyle}"/>
-                                <Button Content="{Binding Translations[UpdateExplicit]}" Command="{Binding UpdateExplicitCommand}"
-                                        Style="{DynamicResource PrimaryButtonStyle}" HorizontalAlignment="Left" Margin="0,10,0,0"/>
+                                <TextBox x:Name="ExplicitTextBox"
+                             Text="{Binding BindingExplicit, UpdateSourceTrigger=Explicit}" 
+                             Style="{DynamicResource AppInputStyle}"/>
+                                <Button Content="{Binding Translations[UpdateExplicit]}" 
+                            Click="UpdateExplicit_Click"
+                            Style="{DynamicResource PrimaryButtonStyle}" 
+                            HorizontalAlignment="Left" Margin="0,10,0,0"/>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
                 </ScrollViewer>
             </TabItem>
-
         </TabControl>
     </DockPanel>
 </Window>

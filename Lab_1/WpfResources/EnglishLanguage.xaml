@@ -99,4 +99,8 @@
     <sys:String x:Key="Undo">Undo</sys:String>
     <sys:String x:Key="Redo">Redo</sys:String>
     <sys:String x:Key="About">About</sys:String>
+    <sys:String x:Key="AccentPalette">Accent Color Palette (10 shades)</sys:String>
+    <sys:String x:Key="SuccessPalette">Success Color Palette (10 shades)</sys:String>
+    <sys:String x:Key="ErrorPalette">Error Color Palette (10 shades)</sys:String>
+    <sys:String x:Key="InfoPalette">Info Color Palette (10 shades)</sys:String>
 </ResourceDictionary>
